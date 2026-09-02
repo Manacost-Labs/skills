@@ -59,7 +59,8 @@ changing either one.
 
 Use `scripts/skillctl list <profile>` to inspect a profile and
 `scripts/skillctl resolve <skill-id>` to locate one canonical skill. These
-commands are read-only.
+commands are read-only. Use `scripts/skillctl audit <project-root>` before any
+project migration to identify canonical matches and local drift.
 
 ## Safe migration
 

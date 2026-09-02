@@ -23,6 +23,12 @@ grep -q '^profile: openbot$' <<< "$plan"
 grep -q '^legacy_skill_files: 1$' <<< "$plan"
 grep -q '^migration: dry-run$' <<< "$plan"
 
+mkdir -p "$tmp_project/work.kolodahearthstone.com/.agents/skills/botforge"
+cp "$repo_root/skills/core/botforge/SKILL.md" "$tmp_project/work.kolodahearthstone.com/.agents/skills/botforge/SKILL.md"
+audit=$($skillctl audit "$tmp_project/work.kolodahearthstone.com")
+grep -q $'^  .agents/skills/botforge/SKILL.md\tcanonical\tcore/botforge$' <<< "$audit"
+grep -q '^  canonical: 1$' <<< "$audit"
+
 if $skillctl resolve missing/skill >/dev/null 2>&1; then
   printf '%s\n' 'expected missing skill to fail' >&2
   exit 1

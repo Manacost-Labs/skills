@@ -58,6 +58,8 @@ skills/<namespace>/<skill-id>/SKILL.md
 ./scripts/skillctl list openbot
 # построить план миграции без изменений
 ./scripts/skillctl plan /srv/projects/web/work.kolodahearthstone.com
+# проверить расхождения локальных копий
+./scripts/skillctl audit /srv/projects/web/work.kolodahearthstone.com
 ```
 
 Проверка не требует установки Node или Bun: она валидирует структуру,

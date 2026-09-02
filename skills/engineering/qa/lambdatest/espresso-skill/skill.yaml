@@ -1,0 +1,5 @@
+id: engineering/qa/lambdatest/espresso-skill
+name: espresso-skill
+namespace: engineering/qa/lambdatest
+status: canonical
+provenance: inventory/external-skills.tsv

@@ -1,0 +1,5 @@
+id: engineering/synthesis/synthesis-okf
+name: synthesis-okf
+namespace: engineering/synthesis
+status: canonical
+provenance: inventory/external-skills.tsv

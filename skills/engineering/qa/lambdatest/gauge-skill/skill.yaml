@@ -1,0 +1,5 @@
+id: engineering/qa/lambdatest/gauge-skill
+name: gauge-skill
+namespace: engineering/qa/lambdatest
+status: canonical
+provenance: inventory/external-skills.tsv

@@ -1,0 +1,5 @@
+id: engineering/autoresearch/autoresearch
+name: autoresearch
+namespace: engineering/autoresearch
+status: canonical
+provenance: inventory/external-skills.tsv

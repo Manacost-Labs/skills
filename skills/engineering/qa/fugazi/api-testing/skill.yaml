@@ -1,0 +1,5 @@
+id: engineering/qa/fugazi/api-testing
+name: api-testing
+namespace: engineering/qa/fugazi
+status: canonical
+provenance: inventory/external-skills.tsv

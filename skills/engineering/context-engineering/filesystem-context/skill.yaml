@@ -1,0 +1,5 @@
+id: engineering/context-engineering/filesystem-context
+name: filesystem-context
+namespace: engineering/context-engineering
+status: canonical
+provenance: inventory/external-skills.tsv

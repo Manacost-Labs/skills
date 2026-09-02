@@ -1,0 +1,5 @@
+id: engineering/qa/lambdatest/laravel-dusk-skill
+name: laravel-dusk-skill
+namespace: engineering/qa/lambdatest
+status: canonical
+provenance: inventory/external-skills.tsv

@@ -1,0 +1,5 @@
+id: engineering/context-engineering/long-horizon-prompting
+name: long-horizon-prompting
+namespace: engineering/context-engineering
+status: canonical
+provenance: inventory/external-skills.tsv

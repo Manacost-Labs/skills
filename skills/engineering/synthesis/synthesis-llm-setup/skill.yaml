@@ -1,0 +1,5 @@
+id: engineering/synthesis/synthesis-llm-setup
+name: synthesis-llm-setup
+namespace: engineering/synthesis
+status: canonical
+provenance: inventory/external-skills.tsv

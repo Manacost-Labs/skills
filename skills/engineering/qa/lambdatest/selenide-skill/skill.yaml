@@ -1,0 +1,5 @@
+id: engineering/qa/lambdatest/selenide-skill
+name: selenide-skill
+namespace: engineering/qa/lambdatest
+status: canonical
+provenance: inventory/external-skills.tsv

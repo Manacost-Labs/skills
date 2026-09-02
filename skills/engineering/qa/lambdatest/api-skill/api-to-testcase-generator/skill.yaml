@@ -1,0 +1,5 @@
+id: engineering/qa/lambdatest/api-skill/api-to-testcase-generator
+name: api-to-testcase-generator
+namespace: engineering/qa/lambdatest/api-skill
+status: canonical
+provenance: inventory/external-skills.tsv

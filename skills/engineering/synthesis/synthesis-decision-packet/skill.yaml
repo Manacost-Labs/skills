@@ -1,0 +1,5 @@
+id: engineering/synthesis/synthesis-decision-packet
+name: synthesis-decision-packet
+namespace: engineering/synthesis
+status: canonical
+provenance: inventory/external-skills.tsv

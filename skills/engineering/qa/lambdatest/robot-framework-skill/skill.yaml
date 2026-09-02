@@ -1,0 +1,5 @@
+id: engineering/qa/lambdatest/robot-framework-skill
+name: robot-framework-skill
+namespace: engineering/qa/lambdatest
+status: canonical
+provenance: inventory/external-skills.tsv

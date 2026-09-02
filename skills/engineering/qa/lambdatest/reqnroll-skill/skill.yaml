@@ -1,0 +1,5 @@
+id: engineering/qa/lambdatest/reqnroll-skill
+name: reqnroll-skill
+namespace: engineering/qa/lambdatest
+status: canonical
+provenance: inventory/external-skills.tsv

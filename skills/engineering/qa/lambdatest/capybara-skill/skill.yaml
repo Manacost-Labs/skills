@@ -1,0 +1,5 @@
+id: engineering/qa/lambdatest/capybara-skill
+name: capybara-skill
+namespace: engineering/qa/lambdatest
+status: canonical
+provenance: inventory/external-skills.tsv

@@ -1,0 +1,5 @@
+id: engineering/github-project/github-project
+name: github-project
+namespace: engineering/github-project
+status: canonical
+provenance: inventory/external-skills.tsv

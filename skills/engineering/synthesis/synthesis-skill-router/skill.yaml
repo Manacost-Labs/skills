@@ -1,0 +1,5 @@
+id: engineering/synthesis/synthesis-skill-router
+name: synthesis-skill-router
+namespace: engineering/synthesis
+status: canonical
+provenance: inventory/external-skills.tsv

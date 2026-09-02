@@ -1,0 +1,5 @@
+id: engineering/qa/lambdatest/mstest-skill
+name: mstest-skill
+namespace: engineering/qa/lambdatest
+status: canonical
+provenance: inventory/external-skills.tsv

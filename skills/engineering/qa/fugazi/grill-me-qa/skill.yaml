@@ -1,0 +1,5 @@
+id: engineering/qa/fugazi/grill-me-qa
+name: grill-me-qa
+namespace: engineering/qa/fugazi
+status: canonical
+provenance: inventory/external-skills.tsv

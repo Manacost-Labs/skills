@@ -80,6 +80,34 @@ external_sources:
     repository: https://github.com/softaworks/agent-toolkit
     imported_paths: skills/dependency-updater
     license: MIT
+  - id: muratcankoylan/Agent-Skills-for-Context-Engineering
+    repository: https://github.com/muratcankoylan/Agent-Skills-for-Context-Engineering
+    imported_paths: seven-requested-context-skills
+    license: MIT
+  - id: uditgoenka/autoresearch
+    repository: https://github.com/uditgoenka/autoresearch
+    imported_paths: plugins/autoresearch/skills/autoresearch
+    license: MIT
+  - id: netresearch/github-project-skill
+    repository: https://github.com/netresearch/github-project-skill
+    imported_paths: skills/github-project
+    license: MIT AND CC-BY-SA-4.0
+  - id: synthesisengineering/synthesis-skills
+    repository: https://github.com/synthesisengineering/synthesis-skills
+    imported_paths: skills collection (63 skills)
+    license: Apache-2.0 AND CC0-1.0
+  - id: fugazi/test-automation-skills-agents
+    repository: https://github.com/fugazi/test-automation-skills-agents
+    imported_paths: skills collection (10 skills)
+    license: MIT
+  - id: balyakin/skill-eval-runner
+    repository: https://github.com/balyakin/skill-eval-runner
+    imported_paths: derived engineering wrapper from README
+    license: MIT
+  - id: LambdaTest/agent-skills
+    repository: https://github.com/LambdaTest/agent-skills
+    imported_paths: skills collection (72 skills)
+    license: MIT
 
 policy:
   import_mode: additive

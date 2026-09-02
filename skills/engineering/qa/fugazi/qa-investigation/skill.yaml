@@ -1,0 +1,5 @@
+id: engineering/qa/fugazi/qa-investigation
+name: qa-investigation
+namespace: engineering/qa/fugazi
+status: canonical
+provenance: inventory/external-skills.tsv

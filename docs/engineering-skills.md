@@ -25,6 +25,29 @@
   лицензии не найден; это явно отражено в inventory и NOTICE.
 - [softaworks/agent-toolkit](https://github.com/softaworks/agent-toolkit) —
   импортирован `dependency-updater` вместе с его вспомогательными скриптами.
+- [muratcankoylan/Agent-Skills-for-Context-Engineering](https://github.com/muratcankoylan/Agent-Skills-for-Context-Engineering) —
+  импортированы 7 выбранных навыков по сжатию, деградации, оптимизации и
+  архитектуре context engineering.
+- [uditgoenka/autoresearch](https://github.com/uditgoenka/autoresearch) —
+  импортирована одна canonical-копия `autoresearch` из plugin-пути; четыре
+  дублирующие установочные копии не размножались.
+- [netresearch/github-project-skill](https://github.com/netresearch/github-project-skill) —
+  импортирован skill для GitHub Projects, branch protection, Issues и PR
+  workflow.
+- [synthesisengineering/synthesis-skills](https://github.com/synthesisengineering/synthesis-skills) —
+  импортированы 63 skills каталога Synthesis с локальными references,
+  scripts и templates.
+- [fugazi/test-automation-skills-agents](https://github.com/fugazi/test-automation-skills-agents) —
+  импортированы 10 QA-навыков для API, Playwright, Selenium, accessibility,
+  E2E и regression testing.
+- [balyakin/skill-eval-runner](https://github.com/balyakin/skill-eval-runner) —
+  добавлен локальный wrapper для CLI `ser`; upstream fixtures и исходники
+  runner не устанавливались как skills.
+- [LambdaTest/agent-skills](https://github.com/LambdaTest/agent-skills) —
+  импортированы 72 навыка тестовой автоматизации для API, browser/mobile
+  frameworks и CI. В Selenium Maven template добавлено явное безопасное
+  ограничение `io.opentelemetry:opentelemetry-api` до `1.62.0` после security
+  scan; исходный commit и изменение companion-файла отражены в provenance.
 
 Commit SHA, путь внутри источника и локальный canonical id находятся в
 `inventory/external-skills.tsv`.

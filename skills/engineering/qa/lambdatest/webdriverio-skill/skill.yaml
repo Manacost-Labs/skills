@@ -1,0 +1,5 @@
+id: engineering/qa/lambdatest/webdriverio-skill
+name: webdriverio-skill
+namespace: engineering/qa/lambdatest
+status: canonical
+provenance: inventory/external-skills.tsv

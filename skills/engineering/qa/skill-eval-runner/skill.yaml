@@ -1,0 +1,5 @@
+id: engineering/qa/skill-eval-runner
+name: skill-eval-runner
+namespace: engineering/qa
+status: canonical
+provenance: inventory/external-skills.tsv

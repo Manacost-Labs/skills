@@ -1,0 +1,78 @@
+# AGENT HEURISTIC: authored for the 4.90.2 Codex cache recovery transaction.
+# Fresh per transaction: changed_surfaces must equal the authoritative
+# base-to-head Git diff before release.py can consume the receipt.
+schema: 2
+suite: codex-update-preserves-the-invoking-hook-root
+membership: closed
+production_entry_point: skills/synthesis-onboarding/scripts/onboard.py
+enforcing_boundary: a Codex plugin refresh on a machine with the durable recovery guardian cannot report success until the guardian has run synchronously and the exact cache root and every plugin-root hook target used by the invoking task are present; historical recovery restores newest roots first
+receipt_consumer: synthesis-skills-manager.release.consume-acceptance.v1
+change_base_policy: boundary-supplied-git-diff
+expected_status: pass
+metadata_class: acceptance-test
+issues_authority_receipt: false
+unverified_remainder: machines without a publisher-installed recovery archive retain the explicit close-other-tasks update contract; the continuous guardian, rather than this synchronous boundary alone, handles a later client reconciliation after the update exits
+changed_surfaces:
+  - path: skills/synthesis-skills-manager/scripts/cache_guardian.py
+    cases: [newest-history-first]
+  - path: skills/synthesis-skills-manager/scripts/test_cache_guardian.py
+    cases: [newest-history-first]
+  - path: skills/synthesis-skills-manager/SKILL.md
+    cases: [newest-history-first, synchronous-update-boundary]
+  - path: skills/synthesis-onboarding/scripts/onboard.py
+    cases: [synchronous-update-boundary, exact-invoking-root, guardian-failure-blocks-success, guardian-absence-is-explicit, unsafe-guardian-fails-closed, claude-route-isolated]
+  - path: skills/synthesis-onboarding/scripts/test_onboard.py
+    cases: [synchronous-update-boundary, exact-invoking-root, guardian-failure-blocks-success, guardian-absence-is-explicit, unsafe-guardian-fails-closed, claude-route-isolated]
+  - path: skills/synthesis-onboarding/SKILL.md
+    cases: [synchronous-update-boundary, guardian-failure-blocks-success]
+  - path: skills/synthesis-implementation-integrity/acceptance-suite.yaml
+    cases: [shipped-manifest-self-consumption]
+  - path: .claude-plugin/plugin.json
+    cases: [release-manifest-parity]
+  - path: .codex-plugin/plugin.json
+    cases: [release-manifest-parity]
+  - path: CHANGELOG.md
+    cases: [release-changelog-parity]
+  - path: README.md
+    cases: [synchronous-update-boundary, guardian-absence-is-explicit]
+cases:
+  - id: newest-history-first
+    control_class: acceptance-test
+    fixture: ../synthesis-skills-manager/scripts/test_cache_guardian.py::test_restore_prioritizes_newest_historical_roots
+    motivating_defect: a-seventy-seven-version-archive-restored-the-immediately-prior-root-last-and-left-the-invoking-task-without-its-stop-hook-for-fifty-five-seconds
+  - id: synchronous-update-boundary
+    control_class: enforced-gate
+    fixture: ../synthesis-onboarding/scripts/test_onboard.py::PluginTests::test_update_refreshes_and_accepts_newer_version_from_old_plugin_cache
+    motivating_defect: the-native-update-command-returned-before-the-background-guardian-finished-repairing-the-cache-generation-it-created
+  - id: exact-invoking-root
+    control_class: acceptance-test
+    fixture: ../synthesis-onboarding/scripts/test_onboard.py::PluginTests::test_codex_history_sync_runs_durable_doctor_and_checks_started_root
+    motivating_defect: a-green-guardian-receipt-without-the-version-root-the-running-task-loaded-does-not-make-that-task-safe
+  - id: guardian-failure-blocks-success
+    control_class: enforced-gate
+    fixture: ../synthesis-onboarding/scripts/test_onboard.py::PluginTests::test_update_fails_when_invoking_codex_history_is_not_restored
+    motivating_defect: the-updater-reported-success-while-its-own-next-lifecycle-hook-could-not-execute
+  - id: guardian-absence-is-explicit
+    control_class: acceptance-test
+    fixture: ../synthesis-onboarding/scripts/test_onboard.py::PluginTests::test_codex_history_sync_is_optional_without_a_durable_guardian
+    motivating_defect: an-updater-must-not-imply-a-recovery-guarantee-on-a-machine-that-has-no-recovery-archive
+  - id: unsafe-guardian-fails-closed
+    control_class: enforced-gate
+    fixture: ../synthesis-onboarding/scripts/test_onboard.py::PluginTests::test_codex_history_sync_refuses_a_dangling_guardian_symlink
+    motivating_defect: a-dangling-guardian-path-is-a-broken-protection-layer-not-an-absent-optional-layer
+  - id: claude-route-isolated
+    control_class: acceptance-test
+    fixture: ../synthesis-onboarding/scripts/test_onboard.py::PluginTests::test_claude_update_does_not_invoke_codex_history_guardian
+    motivating_defect: a-codex-cache-repair-must-not-change-an-unrelated-clients-native-update-contract
+  - id: shipped-manifest-self-consumption
+    control_class: acceptance-test
+    fixture: ../synthesis-implementation-integrity/scripts/test_acceptance_suite.py::test_shipped_manifest_validates
+    motivating_defect: an-acceptance-manifest-that-its-own-runner-cannot-consume-issues-authority-it-never-earned
+  - id: release-manifest-parity
+    control_class: acceptance-test
+    fixture: ../synthesis-skills-manager/scripts/test_release.py::test_source_version_agrees
+    motivating_defect: a-version-that-reaches-only-one-client-manifest-cannot-be-reliably-installed-or-audited
+  - id: release-changelog-parity
+    control_class: acceptance-test
+    fixture: ../synthesis-skills-manager/scripts/test_release.py::test_changelog_top_version_parsed
+    motivating_defect: a-release-whose-changelog-disagrees-with-its-manifests-cannot-be-audited-later

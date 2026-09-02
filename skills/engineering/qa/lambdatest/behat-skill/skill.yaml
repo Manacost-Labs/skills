@@ -1,0 +1,5 @@
+id: engineering/qa/lambdatest/behat-skill
+name: behat-skill
+namespace: engineering/qa/lambdatest
+status: canonical
+provenance: inventory/external-skills.tsv

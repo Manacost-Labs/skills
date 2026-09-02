@@ -1,0 +1,5 @@
+id: engineering/qa/fugazi/playwright-cli
+name: playwright-cli
+namespace: engineering/qa/fugazi
+status: canonical
+provenance: inventory/external-skills.tsv

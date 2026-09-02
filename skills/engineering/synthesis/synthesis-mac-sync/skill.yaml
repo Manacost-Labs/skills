@@ -1,0 +1,5 @@
+id: engineering/synthesis/synthesis-mac-sync
+name: synthesis-mac-sync
+namespace: engineering/synthesis
+status: canonical
+provenance: inventory/external-skills.tsv

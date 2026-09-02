@@ -1,0 +1,5 @@
+id: engineering/synthesis/synthesis-model-tiers
+name: synthesis-model-tiers
+namespace: engineering/synthesis
+status: canonical
+provenance: inventory/external-skills.tsv

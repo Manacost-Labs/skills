@@ -1,0 +1,5 @@
+id: engineering/context-engineering/context-degradation
+name: context-degradation
+namespace: engineering/context-engineering
+status: canonical
+provenance: inventory/external-skills.tsv

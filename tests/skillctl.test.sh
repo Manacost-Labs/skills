@@ -14,6 +14,15 @@ resolved=$($skillctl resolve core/botforge)
 grep -q '^id: core/botforge$' <($skillctl show core/botforge)
 grep -q '^--- SKILL.md ---$' <($skillctl show core/botforge)
 
+tmp_project=$(mktemp -d)
+trap 'rm -rf "$tmp_project"' EXIT
+mkdir -p "$tmp_project/work.kolodahearthstone.com/.claude/skills/demo"
+touch "$tmp_project/work.kolodahearthstone.com/.claude/skills/demo/SKILL.md"
+plan=$($skillctl plan "$tmp_project/work.kolodahearthstone.com")
+grep -q '^profile: openbot$' <<< "$plan"
+grep -q '^legacy_skill_files: 1$' <<< "$plan"
+grep -q '^migration: dry-run$' <<< "$plan"
+
 if $skillctl resolve missing/skill >/dev/null 2>&1; then
   printf '%s\n' 'expected missing skill to fail' >&2
   exit 1

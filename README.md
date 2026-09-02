@@ -56,6 +56,8 @@ skills/<namespace>/<skill-id>/SKILL.md
 ./scripts/refresh-sources-inventory.sh
 # посмотреть активный набор
 ./scripts/skillctl list openbot
+# построить план миграции без изменений
+./scripts/skillctl plan /srv/projects/web/work.kolodahearthstone.com
 ```
 
 Проверка не требует установки Node или Bun: она валидирует структуру,

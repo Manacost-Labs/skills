@@ -10,6 +10,7 @@ Usage:
   skillctl list <profile>       List skills enabled by a profile
   skillctl resolve <skill-id>   Print the canonical SKILL.md path
   skillctl show <skill-id>      Print metadata and the canonical SKILL.md
+  skillctl plan <project-root>  Show a read-only migration plan
   skillctl check                Validate the catalog
 EOF
 }
@@ -58,6 +59,42 @@ show_skill() {
   cat "$repo_root/$path"
 }
 
+detect_profile() {
+  local project_root=$1
+  case "$project_root" in
+    */work.kolodahearthstone.com|*/work-koloda-data-control-6h*) printf 'openbot\n' ;;
+    */HeartPulse|*/heartpulse-*|*/arena.hs-manacost.ru*) printf 'hearthpulse\n' ;;
+    */wordpress/*|*hs-manacost*|*kolodahearthstone*) printf 'wordpress\n' ;;
+    */ParsesUnix|*/data/*|*/api-*) printf 'data\n' ;;
+    *) printf 'server\n' ;;
+  esac
+}
+
+plan_project() {
+  [[ $# -eq 1 ]] || { usage >&2; exit 2; }
+  local project_root
+  project_root=$(cd -- "$1" 2>/dev/null && pwd) || fail "project directory is missing: $1"
+  local profile
+  profile=$(detect_profile "$project_root")
+  local legacy_count=0
+  local loader
+  for loader in .agents/skills .claude/skills .codex/skills; do
+    if [[ -d "$project_root/$loader" ]]; then
+      local loader_count
+      loader_count=$(rg --files --hidden -g 'SKILL.md' "$project_root/$loader" 2>/dev/null | wc -l)
+      legacy_count=$((legacy_count + loader_count))
+    fi
+  done
+  local worktree=not-a-git-worktree
+  if git -C "$project_root" rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+    worktree=clean
+    [[ -n "$(git -C "$project_root" status --short)" ]] && worktree=changed
+  fi
+  printf 'project: %s\nprofile: %s\nworktree: %s\nlegacy_skill_files: %s\nmigration: dry-run\n' \
+    "$project_root" "$profile" "$worktree" "$legacy_count"
+  printf 'next:\n  - review profiles/%s.yaml\n  - compare local skill hashes with inventory/sources.tsv\n  - switch only after the project quality gate passes\n' "$profile"
+}
+
 command_name=${1:-}
 case "$command_name" in
   list)
@@ -72,6 +109,9 @@ case "$command_name" in
   show)
     [[ $# -eq 2 ]] || { usage >&2; exit 2; }
     show_skill "$2"
+    ;;
+  plan)
+    plan_project "$2"
     ;;
   check)
     [[ $# -eq 1 ]] || { usage >&2; exit 2; }

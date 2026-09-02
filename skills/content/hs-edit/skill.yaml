@@ -1,0 +1,5 @@
+id: content/hs-edit
+name: hs-edit
+namespace: content
+status: canonical
+provenance: inventory/sources.tsv

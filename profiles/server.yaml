@@ -1,0 +1,18 @@
+profile: server
+version: 1
+description: Общие правила для работы на Debian-сервере.
+
+load:
+  - core/agent-roster
+  - core/dev-team
+  - core/botforge
+
+external:
+  - /opt/ai-agent-resources/repos/agent-skills/skills/git-workflow-and-versioning/SKILL.md
+  - /opt/ai-agent-resources/repos/agent-skills/skills/incremental-implementation/SKILL.md
+
+guardrails:
+  - read-nearest-project-agents-first
+  - check-worktree-before-edit
+  - keep-secrets-out-of-skills
+  - use-project-quality-gate

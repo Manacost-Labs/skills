@@ -1,0 +1,5 @@
+id: wordpress/wordpress-router
+name: wordpress-router
+namespace: wordpress
+status: canonical
+provenance: inventory/sources.tsv

@@ -1,0 +1,5 @@
+id: wordpress/blocksy-theme
+name: blocksy-theme
+namespace: wordpress
+status: canonical
+provenance: inventory/sources.tsv

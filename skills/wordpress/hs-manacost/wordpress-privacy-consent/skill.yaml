@@ -1,0 +1,5 @@
+id: wordpress/hs-manacost/wordpress-privacy-consent
+name: wordpress-privacy-consent
+namespace: wordpress/hs-manacost
+status: canonical
+provenance: inventory/sources.tsv

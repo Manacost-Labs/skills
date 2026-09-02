@@ -1,0 +1,5 @@
+id: data/web-scraper
+name: web-scraper
+namespace: data
+status: canonical
+provenance: inventory/sources.tsv

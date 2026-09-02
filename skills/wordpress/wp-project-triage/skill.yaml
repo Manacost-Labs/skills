@@ -1,0 +1,5 @@
+id: wordpress/wp-project-triage
+name: wp-project-triage
+namespace: wordpress
+status: canonical
+provenance: inventory/sources.tsv

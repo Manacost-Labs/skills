@@ -1,0 +1,5 @@
+id: core/react-doctor
+name: react-doctor
+namespace: core
+status: canonical
+provenance: inventory/sources.tsv

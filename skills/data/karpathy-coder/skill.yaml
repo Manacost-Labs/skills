@@ -1,0 +1,5 @@
+id: data/karpathy-coder
+name: karpathy-coder
+namespace: data
+status: canonical
+provenance: inventory/sources.tsv

@@ -1,0 +1,5 @@
+id: wordpress/hs-manacost/wordpress-change-impact
+name: wordpress-change-impact
+namespace: wordpress/hs-manacost
+status: canonical
+provenance: inventory/sources.tsv

@@ -1,0 +1,5 @@
+id: wordpress/workers-best-practices
+name: workers-best-practices
+namespace: wordpress
+status: canonical
+provenance: inventory/sources.tsv

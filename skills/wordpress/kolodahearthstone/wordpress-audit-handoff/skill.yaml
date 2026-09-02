@@ -1,0 +1,5 @@
+id: wordpress/kolodahearthstone/wordpress-audit-handoff
+name: wordpress-audit-handoff
+namespace: wordpress/kolodahearthstone
+status: canonical
+provenance: inventory/sources.tsv

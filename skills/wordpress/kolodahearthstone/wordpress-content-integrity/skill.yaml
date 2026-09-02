@@ -1,0 +1,5 @@
+id: wordpress/kolodahearthstone/wordpress-content-integrity
+name: wordpress-content-integrity
+namespace: wordpress/kolodahearthstone
+status: canonical
+provenance: inventory/sources.tsv

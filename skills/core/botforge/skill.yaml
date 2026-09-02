@@ -1,0 +1,5 @@
+id: core/botforge
+name: botforge
+namespace: core
+status: canonical
+provenance: inventory/sources.tsv

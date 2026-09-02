@@ -1,0 +1,5 @@
+id: deckview/deckview-render-benchmark
+name: deckview-render-benchmark
+namespace: deckview
+status: canonical
+provenance: inventory/sources.tsv

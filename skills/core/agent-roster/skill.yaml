@@ -1,0 +1,5 @@
+id: core/agent-roster
+name: agent-roster
+namespace: core
+status: canonical
+provenance: inventory/sources.tsv

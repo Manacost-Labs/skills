@@ -1,0 +1,5 @@
+id: wordpress/kolodahearthstone/wordpress-privacy-consent
+name: wordpress-privacy-consent
+namespace: wordpress/kolodahearthstone
+status: canonical
+provenance: inventory/sources.tsv

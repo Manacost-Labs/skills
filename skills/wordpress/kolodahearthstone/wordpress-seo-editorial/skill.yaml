@@ -1,0 +1,5 @@
+id: wordpress/kolodahearthstone/wordpress-seo-editorial
+name: wordpress-seo-editorial
+namespace: wordpress/kolodahearthstone
+status: canonical
+provenance: inventory/sources.tsv

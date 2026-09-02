@@ -1,0 +1,5 @@
+id: wordpress/kolodahearthstone/wordpress-observability
+name: wordpress-observability
+namespace: wordpress/kolodahearthstone
+status: canonical
+provenance: inventory/sources.tsv

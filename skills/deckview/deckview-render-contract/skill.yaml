@@ -1,0 +1,5 @@
+id: deckview/deckview-render-contract
+name: deckview-render-contract
+namespace: deckview
+status: canonical
+provenance: inventory/sources.tsv

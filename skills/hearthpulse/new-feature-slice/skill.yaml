@@ -1,0 +1,5 @@
+id: hearthpulse/new-feature-slice
+name: new-feature-slice
+namespace: hearthpulse
+status: canonical
+provenance: inventory/sources.tsv

@@ -1,0 +1,5 @@
+id: data/python-lint
+name: python-lint
+namespace: data
+status: canonical
+provenance: inventory/sources.tsv

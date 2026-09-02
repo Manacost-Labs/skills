@@ -1,0 +1,5 @@
+id: wordpress/hs-manacost-project
+name: hs-manacost-project
+namespace: wordpress
+status: canonical
+provenance: inventory/sources.tsv

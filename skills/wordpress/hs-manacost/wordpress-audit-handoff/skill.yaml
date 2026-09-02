@@ -1,0 +1,5 @@
+id: wordpress/hs-manacost/wordpress-audit-handoff
+name: wordpress-audit-handoff
+namespace: wordpress/hs-manacost
+status: canonical
+provenance: inventory/sources.tsv

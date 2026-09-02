@@ -1,0 +1,17 @@
+# Local reports and generated audit output
+inventory/*.local.*
+reports/
+
+# Secrets and machine-local configuration
+.env
+.env.*
+*.pem
+*.key
+*.p12
+*.pfx
+credentials.json
+
+# OS/editor files
+.DS_Store
+.idea/
+.vscode/

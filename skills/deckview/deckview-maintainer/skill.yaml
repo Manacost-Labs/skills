@@ -1,0 +1,5 @@
+id: deckview/deckview-maintainer
+name: deckview-maintainer
+namespace: deckview
+status: canonical
+provenance: inventory/sources.tsv

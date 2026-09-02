@@ -1,0 +1,5 @@
+id: hearthpulse/extract-from-god-file
+name: extract-from-god-file
+namespace: hearthpulse
+status: canonical
+provenance: inventory/sources.tsv

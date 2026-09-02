@@ -1,0 +1,5 @@
+id: deckview/deckview-visual-regression
+name: deckview-visual-regression
+namespace: deckview
+status: canonical
+provenance: inventory/sources.tsv

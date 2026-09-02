@@ -1,0 +1,5 @@
+id: openbot/openbot-data-access
+name: openbot-data-access
+namespace: openbot
+status: canonical
+provenance: inventory/sources.tsv

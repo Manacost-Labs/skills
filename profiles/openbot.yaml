@@ -1,0 +1,15 @@
+profile: openbot
+version: 1
+description: OpenBot и производительный интерфейс чата.
+
+load:
+  - core/botforge
+  - openbot/openbot-data-access
+  - openbot/openbot-screen-layout
+  - frontend/web-perf
+
+guardrails:
+  - preserve-parallel-session-changes
+  - benchmark-before-virtualization
+  - use-reduced-motion
+  - do-not-edit-authentication-without-explicit-scope

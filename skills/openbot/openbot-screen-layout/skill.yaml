@@ -1,0 +1,5 @@
+id: openbot/openbot-screen-layout
+name: openbot-screen-layout
+namespace: openbot
+status: canonical
+provenance: inventory/sources.tsv

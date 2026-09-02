@@ -1,0 +1,5 @@
+id: content/hearthstone-editor
+name: hearthstone-editor
+namespace: content
+status: canonical
+provenance: inventory/sources.tsv

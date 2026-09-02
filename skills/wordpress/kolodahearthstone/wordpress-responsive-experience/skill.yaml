@@ -1,0 +1,5 @@
+id: wordpress/kolodahearthstone/wordpress-responsive-experience
+name: wordpress-responsive-experience
+namespace: wordpress/kolodahearthstone
+status: canonical
+provenance: inventory/sources.tsv

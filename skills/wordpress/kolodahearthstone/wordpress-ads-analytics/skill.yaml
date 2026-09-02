@@ -1,0 +1,5 @@
+id: wordpress/kolodahearthstone/wordpress-ads-analytics
+name: wordpress-ads-analytics
+namespace: wordpress/kolodahearthstone
+status: canonical
+provenance: inventory/sources.tsv

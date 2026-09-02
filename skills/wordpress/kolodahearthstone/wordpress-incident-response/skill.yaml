@@ -1,0 +1,5 @@
+id: wordpress/kolodahearthstone/wordpress-incident-response
+name: wordpress-incident-response
+namespace: wordpress/kolodahearthstone
+status: canonical
+provenance: inventory/sources.tsv

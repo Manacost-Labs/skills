@@ -1,0 +1,5 @@
+id: wordpress/hs-manacost/wordpress-seo-editorial
+name: wordpress-seo-editorial
+namespace: wordpress/hs-manacost
+status: canonical
+provenance: inventory/sources.tsv

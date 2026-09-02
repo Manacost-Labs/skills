@@ -1,0 +1,21 @@
+profile: data
+version: 1
+description: Парсеры, контроль данных и Python-проекты.
+
+load:
+  - data/audit-parser-system
+  - data/karpathy-coder
+  - data/python-ci
+  - data/python-lint
+  - data/python-typing
+  - data/scraper-debugger
+  - data/scraper-regression
+  - data/site-profile-engineer
+  - data/systematic-debugging
+  - data/verification-before-completion
+  - data/web-scraper
+
+guardrails:
+  - preserve-source-data
+  - do-not-print-secrets-or-dumps
+  - run-python-quality-gate

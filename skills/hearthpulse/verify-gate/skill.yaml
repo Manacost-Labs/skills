@@ -1,0 +1,5 @@
+id: hearthpulse/verify-gate
+name: verify-gate
+namespace: hearthpulse
+status: canonical
+provenance: inventory/sources.tsv

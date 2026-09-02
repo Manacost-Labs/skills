@@ -1,0 +1,5 @@
+id: wordpress/kolodahearthstone/wordpress-admin-performance
+name: wordpress-admin-performance
+namespace: wordpress/kolodahearthstone
+status: canonical
+provenance: inventory/sources.tsv

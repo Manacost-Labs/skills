@@ -1,0 +1,59 @@
+version: 1
+repository: https://github.com/Manacost-Labs/skills
+canonical_root: skills
+policy_file: AGENTS.md
+server_entrypoints:
+  - /srv/projects/AGENTS.md
+  - /home/debian/server/AGENTS.md
+entrypoint_install_script: scripts/install-server-entrypoints.sh
+inventory_file: inventory/skills.tsv
+source_inventory_file: inventory/sources.tsv
+inventory_refresh_script: scripts/refresh-sources-inventory.sh
+
+skill_contract:
+  directory: skills/<namespace>/<skill-id>
+  required_files:
+    - SKILL.md
+    - skill.yaml
+  frontmatter:
+    required:
+      - name
+      - description
+  id_pattern: '^[a-z0-9][a-z0-9-]*$'
+
+profiles:
+  - id: server
+    file: profiles/server.yaml
+    purpose: common server operations and agent coordination
+  - id: openbot
+    file: profiles/openbot.yaml
+    purpose: OpenBot chat and frontend work
+  - id: hearthpulse
+    file: profiles/hearthpulse.yaml
+    purpose: HearthPulse application work
+  - id: wordpress
+    file: profiles/wordpress.yaml
+    purpose: WordPress sites, plugins, and publishing
+  - id: data
+    file: profiles/data.yaml
+    purpose: parsers, data control, and Python services
+
+sources:
+  canonical:
+    - skills
+  local_project_roots:
+    - /srv/projects
+  local_user_roots:
+    - /home/debian/.agents/skills
+    - /home/debian/.codex/skills
+  shared_catalogs:
+    - /opt/ai-agent-resources/skills
+    - /opt/ai-agent-resources/repos/skills/skills/.curated
+    - /opt/ai-agent-resources/repos/awesome-codex-skills
+    - /home/debian/.codex/plugins/cache
+
+policy:
+  import_mode: additive
+  never_edit: production copies, authentication files, secrets, vendor caches
+  remove_legacy_only_after: project-enabled-and-verified
+  conflict_mode: preserve-explicit-namespaces

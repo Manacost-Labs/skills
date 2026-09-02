@@ -1,0 +1,5 @@
+id: deckview/deckview-render-cache
+name: deckview-render-cache
+namespace: deckview
+status: canonical
+provenance: inventory/sources.tsv

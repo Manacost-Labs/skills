@@ -1,0 +1,5 @@
+id: wordpress/kolodahearthstone/wordpress-clean-code
+name: wordpress-clean-code
+namespace: wordpress/kolodahearthstone
+status: canonical
+provenance: inventory/sources.tsv

@@ -1,0 +1,5 @@
+id: wordpress/hs-manacost/wordpress-incident-response
+name: wordpress-incident-response
+namespace: wordpress/hs-manacost
+status: canonical
+provenance: inventory/sources.tsv

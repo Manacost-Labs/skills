@@ -1,0 +1,5 @@
+id: wordpress/wrangler
+name: wrangler
+namespace: wordpress
+status: canonical
+provenance: inventory/sources.tsv

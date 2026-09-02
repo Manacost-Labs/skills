@@ -1,0 +1,5 @@
+id: wordpress/kolodahearthstone/wordpress-editorial-publish-gate
+name: wordpress-editorial-publish-gate
+namespace: wordpress/kolodahearthstone
+status: canonical
+provenance: inventory/sources.tsv

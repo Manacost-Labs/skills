@@ -1,0 +1,5 @@
+id: data/verification-before-completion
+name: verification-before-completion
+namespace: data
+status: canonical
+provenance: inventory/sources.tsv

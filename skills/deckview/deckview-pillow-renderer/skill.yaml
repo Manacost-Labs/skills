@@ -1,0 +1,5 @@
+id: deckview/deckview-pillow-renderer
+name: deckview-pillow-renderer
+namespace: deckview
+status: canonical
+provenance: inventory/sources.tsv

@@ -1,0 +1,5 @@
+id: data/scraper-debugger
+name: scraper-debugger
+namespace: data
+status: canonical
+provenance: inventory/sources.tsv

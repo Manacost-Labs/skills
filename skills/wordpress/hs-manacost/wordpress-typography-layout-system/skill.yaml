@@ -1,0 +1,5 @@
+id: wordpress/hs-manacost/wordpress-typography-layout-system
+name: wordpress-typography-layout-system
+namespace: wordpress/hs-manacost
+status: canonical
+provenance: inventory/sources.tsv

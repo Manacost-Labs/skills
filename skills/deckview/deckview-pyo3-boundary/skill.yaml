@@ -1,0 +1,5 @@
+id: deckview/deckview-pyo3-boundary
+name: deckview-pyo3-boundary
+namespace: deckview
+status: canonical
+provenance: inventory/sources.tsv

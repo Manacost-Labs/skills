@@ -1,0 +1,5 @@
+id: wordpress/kolodahearthstone/wordpress-admin-ui
+name: wordpress-admin-ui
+namespace: wordpress/kolodahearthstone
+status: canonical
+provenance: inventory/sources.tsv

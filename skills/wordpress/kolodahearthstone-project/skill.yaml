@@ -1,0 +1,5 @@
+id: wordpress/kolodahearthstone-project
+name: kolodahearthstone-project
+namespace: wordpress
+status: canonical
+provenance: inventory/sources.tsv

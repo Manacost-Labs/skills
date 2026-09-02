@@ -1,0 +1,5 @@
+id: wordpress/hs-manacost/wordpress-clean-code
+name: wordpress-clean-code
+namespace: wordpress/hs-manacost
+status: canonical
+provenance: inventory/sources.tsv

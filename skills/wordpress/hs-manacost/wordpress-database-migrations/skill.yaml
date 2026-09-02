@@ -1,0 +1,5 @@
+id: wordpress/hs-manacost/wordpress-database-migrations
+name: wordpress-database-migrations
+namespace: wordpress/hs-manacost
+status: canonical
+provenance: inventory/sources.tsv

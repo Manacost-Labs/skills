@@ -1,0 +1,5 @@
+id: wordpress/hs-manacost/wordpress-external-integrations
+name: wordpress-external-integrations
+namespace: wordpress/hs-manacost
+status: canonical
+provenance: inventory/sources.tsv

@@ -1,0 +1,5 @@
+id: wordpress/hs-manacost/wordpress-editorial-publish-gate
+name: wordpress-editorial-publish-gate
+namespace: wordpress/hs-manacost
+status: canonical
+provenance: inventory/sources.tsv

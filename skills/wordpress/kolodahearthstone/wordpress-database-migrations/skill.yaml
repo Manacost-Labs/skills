@@ -1,0 +1,5 @@
+id: wordpress/kolodahearthstone/wordpress-database-migrations
+name: wordpress-database-migrations
+namespace: wordpress/kolodahearthstone
+status: canonical
+provenance: inventory/sources.tsv

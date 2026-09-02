@@ -1,0 +1,5 @@
+id: wordpress/hs-manacost/wordpress-article-editor
+name: wordpress-article-editor
+namespace: wordpress/hs-manacost
+status: canonical
+provenance: inventory/sources.tsv

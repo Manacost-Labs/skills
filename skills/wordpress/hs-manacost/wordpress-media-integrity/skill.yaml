@@ -1,0 +1,5 @@
+id: wordpress/hs-manacost/wordpress-media-integrity
+name: wordpress-media-integrity
+namespace: wordpress/hs-manacost
+status: canonical
+provenance: inventory/sources.tsv

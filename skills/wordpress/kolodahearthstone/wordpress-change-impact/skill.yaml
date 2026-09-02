@@ -1,0 +1,5 @@
+id: wordpress/kolodahearthstone/wordpress-change-impact
+name: wordpress-change-impact
+namespace: wordpress/kolodahearthstone
+status: canonical
+provenance: inventory/sources.tsv

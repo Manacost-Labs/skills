@@ -1,0 +1,5 @@
+id: data/systematic-debugging
+name: systematic-debugging
+namespace: data
+status: canonical
+provenance: inventory/sources.tsv

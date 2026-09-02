@@ -1,0 +1,5 @@
+id: core/dev-team
+name: dev-team
+namespace: core
+status: canonical
+provenance: inventory/sources.tsv

@@ -1,0 +1,5 @@
+id: wordpress/update-to-wordpress-6-9
+name: update-to-wordpress-6-9
+namespace: wordpress
+status: canonical
+provenance: inventory/sources.tsv

@@ -1,0 +1,5 @@
+id: wordpress/kolodahearthstone/wordpress-redesign-system
+name: wordpress-redesign-system
+namespace: wordpress/kolodahearthstone
+status: canonical
+provenance: inventory/sources.tsv

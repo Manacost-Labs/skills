@@ -1,0 +1,5 @@
+id: frontend/web-perf
+name: web-perf
+namespace: frontend
+status: canonical
+provenance: inventory/sources.tsv

@@ -1,0 +1,5 @@
+id: wordpress/wp-plugin-development
+name: wp-plugin-development
+namespace: wordpress
+status: canonical
+provenance: inventory/sources.tsv

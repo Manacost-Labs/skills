@@ -1,0 +1,5 @@
+id: hearthpulse/checkpoint-commit
+name: checkpoint-commit
+namespace: hearthpulse
+status: canonical
+provenance: inventory/sources.tsv

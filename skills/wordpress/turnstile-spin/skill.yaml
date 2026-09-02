@@ -1,0 +1,5 @@
+id: wordpress/turnstile-spin
+name: turnstile-spin
+namespace: wordpress
+status: canonical
+provenance: inventory/sources.tsv

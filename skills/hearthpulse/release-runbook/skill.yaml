@@ -1,0 +1,5 @@
+id: hearthpulse/release-runbook
+name: release-runbook
+namespace: hearthpulse
+status: canonical
+provenance: inventory/sources.tsv

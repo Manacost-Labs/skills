@@ -1,0 +1,5 @@
+id: wordpress/hs-manacost/wordpress-admin-performance
+name: wordpress-admin-performance
+namespace: wordpress/hs-manacost
+status: canonical
+provenance: inventory/sources.tsv

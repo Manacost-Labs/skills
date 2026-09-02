@@ -1,0 +1,5 @@
+id: wordpress/hs-manacost/wordpress-ads-analytics
+name: wordpress-ads-analytics
+namespace: wordpress/hs-manacost
+status: canonical
+provenance: inventory/sources.tsv

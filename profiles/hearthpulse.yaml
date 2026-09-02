@@ -1,0 +1,17 @@
+profile: hearthpulse
+version: 1
+description: HearthPulse frontend, backend и release workflow.
+
+load:
+  - hearthpulse/api-contract-change
+  - hearthpulse/arch-boundaries
+  - hearthpulse/checkpoint-commit
+  - hearthpulse/new-feature-slice
+  - hearthpulse/new-server-module
+  - hearthpulse/release-runbook
+  - hearthpulse/verify-gate
+
+guardrails:
+  - preserve-local-project-agents
+  - no-api-contract-change-without-review
+  - run-project-check-before-commit

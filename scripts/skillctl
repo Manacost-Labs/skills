@@ -38,16 +38,26 @@ inventory_path() {
   printf '%s\n' "$path"
 }
 
+print_profile_skills() {
+  local file=$1
+  while IFS= read -r skill_id; do
+    [[ -z "$skill_id" ]] && continue
+    printf '  %s\t%s\n' "$skill_id" "$(inventory_path "$skill_id")"
+  done < <(awk '/^load:/{active=1; next} /^[^[:space:]]/{active=0} active && /^  - [^\/]+\/[^[:space:]]+$/{print $2}' "$file")
+}
+
 list_profile() {
   local profile=$1
   local file
   file=$(profile_file "$profile")
   printf 'profile: %s\n' "$profile"
   printf 'skills:\n'
-  while IFS= read -r skill_id; do
-    [[ -z "$skill_id" ]] && continue
-    printf '  %s\t%s\n' "$skill_id" "$(inventory_path "$skill_id")"
-  done < <(awk '/^load:/{active=1; next} /^[^[:space:]]/{active=0} active && /^  - [^\/]+\/[^[:space:]]+$/{print $2}' "$file")
+  print_profile_skills "$file"
+  while IFS= read -r included_profile; do
+    [[ -z "$included_profile" ]] && continue
+    printf 'included_profile: %s\n' "$included_profile"
+    print_profile_skills "$(profile_file "$included_profile")"
+  done < <(awk '/^include:/{active=1; next} /^[^[:space:]]/{active=0} active && /^  - [a-z0-9][a-z0-9-]*$/{print $2}' "$file")
 }
 
 show_skill() {

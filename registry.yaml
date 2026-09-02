@@ -8,6 +8,7 @@ server_entrypoints:
 entrypoint_install_script: scripts/install-server-entrypoints.sh
 inventory_file: inventory/skills.tsv
 source_inventory_file: inventory/sources.tsv
+external_inventory_file: inventory/external-skills.tsv
 inventory_refresh_script: scripts/refresh-sources-inventory.sh
 
 skill_contract:
@@ -37,6 +38,9 @@ profiles:
   - id: data
     file: profiles/data.yaml
     purpose: parsers, data control, and Python services
+  - id: engineering
+    file: profiles/engineering.yaml
+    purpose: architecture, debugging, domain modeling, and safe refactoring
 
 sources:
   canonical:
@@ -51,6 +55,19 @@ sources:
     - /opt/ai-agent-resources/repos/skills/skills/.curated
     - /opt/ai-agent-resources/repos/awesome-codex-skills
     - /home/debian/.codex/plugins/cache
+
+external_sources:
+  - id: ciembor/agent-rules-books
+    repository: https://github.com/ciembor/agent-rules-books
+    imported_variant: mini
+    license: MIT
+  - id: nathankim0/clean-architecture-skills
+    repository: https://github.com/nathankim0/clean-architecture-skills
+    license: MIT
+  - id: mattpocock/skills
+    repository: https://github.com/mattpocock/skills
+    imported_paths: five-requested-engineering-skills
+    license: MIT
 
 policy:
   import_mode: additive

@@ -7,6 +7,8 @@ skillctl="$repo_root/scripts/skillctl"
 server_listing=$($skillctl list server)
 grep -q '^profile: server$' <<< "$server_listing"
 grep -q $'^  core/agent-roster\tskills/core/agent-roster/SKILL.md$' <<< "$server_listing"
+grep -q '^included_profile: engineering$' <<< "$server_listing"
+grep -q $'^  engineering/codebase-design\tskills/engineering/codebase-design/SKILL.md$' <<< "$server_listing"
 
 resolved=$($skillctl resolve core/botforge)
 [[ "$resolved" == "$repo_root/skills/core/botforge/SKILL.md" ]]

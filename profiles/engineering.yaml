@@ -1,0 +1,33 @@
+profile: engineering
+version: 1
+description: Общий инженерный слой для архитектуры, отладки, моделирования домена и безопасных изменений.
+
+load:
+  - engineering/codebase-design
+  - engineering/diagnosing-bugs
+  - engineering/domain-modeling
+  - engineering/improve-codebase-architecture
+  - engineering/resolving-merge-conflicts
+  - engineering/clean-architecture-skills/clean-architecture
+  - engineering/clean-architecture-skills/kent-beck-style
+  - engineering/agent-rules-books/a-philosophy-of-software-design
+  - engineering/agent-rules-books/clean-architecture
+  - engineering/agent-rules-books/clean-code
+  - engineering/agent-rules-books/code-complete
+  - engineering/agent-rules-books/designing-data-intensive-applications
+  - engineering/agent-rules-books/domain-driven-design
+  - engineering/agent-rules-books/domain-driven-design-distilled
+  - engineering/agent-rules-books/implementing-domain-driven-design
+  - engineering/agent-rules-books/patterns-of-enterprise-application-architecture
+  - engineering/agent-rules-books/refactoring-guru
+  - engineering/agent-rules-books/refactoring
+  - engineering/agent-rules-books/release-it
+  - engineering/agent-rules-books/the-pragmatic-programmer
+  - engineering/agent-rules-books/working-effectively-with-legacy-code
+
+activation: available-on-demand
+guardrails:
+  - load-only-the-smallest-relevant-set
+  - keep-project-agents-more-specific
+  - preserve-upstream-license-and-provenance
+  - review-external-rules-before-changing-production

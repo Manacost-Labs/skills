@@ -72,6 +72,10 @@ Only the last state permits removing a project-local copy, and only in a
 separate change after the project has passed its own checks. Conflicting files
 keep explicit namespaces until a human chooses the winning version.
 
+The `engineering` profile is available server-wide on demand. It is not a
+command to load every rule into every prompt: choose the smallest relevant
+subset for the task.
+
 ## External catalogs
 
 Vendor and platform catalogs remain dependencies, not copied source. They are

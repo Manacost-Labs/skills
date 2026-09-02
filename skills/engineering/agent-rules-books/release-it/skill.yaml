@@ -1,0 +1,5 @@
+id: engineering/agent-rules-books/release-it
+name: release-it
+namespace: engineering/agent-rules-books
+status: canonical
+provenance: inventory/external-skills.tsv

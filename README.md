@@ -47,6 +47,11 @@ skills/<namespace>/<skill-id>/SKILL.md
 - `hearthpulse` — сервисы HearthPulse;
 - `wordpress` — WordPress-сайты и плагины;
 - `data` — парсеры, контроль данных и Python.
+- `engineering` — общий слой архитектуры, отладки, DDD и безопасного рефакторинга.
+
+Профиль `server` включает `engineering` как общий on-demand слой; это делает
+skills доступными всему серверу, но не заставляет загружать их все в каждый
+запрос.
 
 ## Проверка
 
@@ -56,6 +61,8 @@ skills/<namespace>/<skill-id>/SKILL.md
 ./scripts/refresh-sources-inventory.sh
 # посмотреть активный набор
 ./scripts/skillctl list openbot
+# общий инженерный слой
+./scripts/skillctl list engineering
 # построить план миграции без изменений
 ./scripts/skillctl plan /srv/projects/web/work.kolodahearthstone.com
 # проверить расхождения локальных копий

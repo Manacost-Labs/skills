@@ -5,6 +5,7 @@ repo_root=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)
 registry="$repo_root/registry.yaml"
 inventory="$repo_root/inventory/skills.tsv"
 source_inventory="$repo_root/inventory/sources.tsv"
+external_inventory="$repo_root/inventory/external-skills.tsv"
 
 failures=0
 fail() {
@@ -15,8 +16,9 @@ fail() {
 [[ -f "$registry" ]] || fail "missing registry.yaml"
 [[ -f "$inventory" ]] || fail "missing inventory/skills.tsv"
 [[ -f "$source_inventory" ]] || fail "missing inventory/sources.tsv"
+[[ -f "$external_inventory" ]] || fail "missing inventory/external-skills.tsv"
 
-for required in AGENTS.md README.md docs/migration.md profiles/server.yaml profiles/openbot.yaml profiles/hearthpulse.yaml profiles/wordpress.yaml profiles/data.yaml; do
+for required in AGENTS.md README.md docs/migration.md docs/engineering-skills.md profiles/server.yaml profiles/openbot.yaml profiles/hearthpulse.yaml profiles/wordpress.yaml profiles/data.yaml profiles/engineering.yaml third_party/NOTICE.md; do
   [[ -f "$repo_root/$required" ]] || fail "missing $required"
 done
 
@@ -89,6 +91,21 @@ if [[ -f "$source_inventory" ]]; then
   done < <(tail -n +2 "$source_inventory")
 fi
 
+if [[ -f "$external_inventory" ]]; then
+  external_header=$(head -n 1 "$external_inventory")
+  [[ "$external_header" == $'id\tsource_repo\tsource_commit\tsource_path\tsource_sha256\tcanonical_sha256\tlicense\timported_variant\tstatus' ]] || fail "invalid external inventory header"
+  while IFS=$'\t' read -r id source_repo source_commit source_path source_hash canonical_hash license imported_variant status; do
+    [[ -z "$id" ]] && continue
+    awk -F '\t' -v wanted="$id" 'NR > 1 && $1 == wanted {found=1} END {exit !found}' "$inventory" || fail "external inventory references missing id: $id"
+    [[ "$source_repo" == https://github.com/* ]] || fail "invalid source repository for $id"
+    [[ "$source_commit" =~ ^[0-9a-f]{40}$ ]] || fail "invalid source commit for $id"
+    [[ -n "$source_path" ]] || fail "missing source path for $id"
+    [[ "$source_hash" =~ ^[0-9a-f]{40,64}$ ]] || fail "invalid source hash for $id"
+    [[ "$canonical_hash" =~ ^[0-9a-f]{64}$ ]] || fail "invalid canonical hash for $id"
+    [[ -n "$license" && -n "$imported_variant" && -n "$status" ]] || fail "incomplete external metadata for $id"
+  done < <(tail -n +2 "$external_inventory")
+fi
+
 for profile in "$repo_root"/profiles/*.yaml; do
   while IFS= read -r skill_id; do
     [[ -z "$skill_id" ]] && continue
@@ -96,6 +113,10 @@ for profile in "$repo_root"/profiles/*.yaml; do
       fail "profile $(basename -- "$profile") references missing canonical skill: $skill_id"
     fi
   done < <(awk '/^load:/{active=1; next} /^[^[:space:]]/{active=0} active && /^  - [^\/]+\/[^[:space:]]+$/{print $2}' "$profile")
+  while IFS= read -r included_profile; do
+    [[ -z "$included_profile" ]] && continue
+    [[ -f "$repo_root/profiles/$included_profile.yaml" ]] || fail "profile $(basename -- "$profile") includes missing profile: $included_profile"
+  done < <(awk '/^include:/{active=1; next} /^[^[:space:]]/{active=0} active && /^  - [a-z0-9][a-z0-9-]*$/{print $2}' "$profile")
 done
 
 if (( failures > 0 )); then

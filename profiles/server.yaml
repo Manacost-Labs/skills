@@ -7,6 +7,9 @@ load:
   - core/dev-team
   - core/botforge
 
+include:
+  - engineering
+
 external:
   - /opt/ai-agent-resources/repos/agent-skills/skills/git-workflow-and-versioning/SKILL.md
   - /opt/ai-agent-resources/repos/agent-skills/skills/incremental-implementation/SKILL.md

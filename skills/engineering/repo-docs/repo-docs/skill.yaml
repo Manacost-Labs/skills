@@ -1,0 +1,5 @@
+id: engineering/repo-docs/repo-docs
+name: repo-docs
+namespace: engineering/repo-docs
+status: canonical
+provenance: inventory/external-skills.tsv

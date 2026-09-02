@@ -126,3 +126,16 @@ engineering/improve-codebase-architecture	engineering	skills/engineering/improve
 engineering/resolving-merge-conflicts	engineering	skills/engineering/resolving-merge-conflicts/SKILL.md	1	1	canonical
 engineering/clean-architecture-skills/clean-architecture	engineering/clean-architecture-skills	skills/engineering/clean-architecture-skills/clean-architecture/SKILL.md	1	1	canonical
 engineering/clean-architecture-skills/kent-beck-style	engineering/clean-architecture-skills	skills/engineering/clean-architecture-skills/kent-beck-style/SKILL.md	1	1	canonical
+engineering/addy/api-and-interface-design	engineering/addy	skills/engineering/addy/api-and-interface-design/SKILL.md	1	1	canonical
+engineering/addy/ci-cd-and-automation	engineering/addy	skills/engineering/addy/ci-cd-and-automation/SKILL.md	1	1	canonical
+engineering/addy/context-engineering	engineering/addy	skills/engineering/addy/context-engineering/SKILL.md	1	1	canonical
+engineering/addy/documentation-and-adrs	engineering/addy	skills/engineering/addy/documentation-and-adrs/SKILL.md	1	1	canonical
+engineering/addy/frontend-ui-engineering	engineering/addy	skills/engineering/addy/frontend-ui-engineering/SKILL.md	1	1	canonical
+engineering/addy/git-workflow-and-versioning	engineering/addy	skills/engineering/addy/git-workflow-and-versioning/SKILL.md	1	1	canonical
+engineering/addy/performance-optimization	engineering/addy	skills/engineering/addy/performance-optimization/SKILL.md	1	1	canonical
+engineering/addy/planning-and-task-breakdown	engineering/addy	skills/engineering/addy/planning-and-task-breakdown/SKILL.md	1	1	canonical
+engineering/addy/source-driven-development	engineering/addy	skills/engineering/addy/source-driven-development/SKILL.md	1	1	canonical
+engineering/addy/using-agent-skills	engineering/addy	skills/engineering/addy/using-agent-skills/SKILL.md	1	1	canonical
+engineering/repo-docs/repo-docs	engineering/repo-docs	skills/engineering/repo-docs/repo-docs/SKILL.md	1	1	canonical
+engineering/repo-docs/repo-docs-zh	engineering/repo-docs	skills/engineering/repo-docs/repo-docs-zh/SKILL.md	1	1	canonical
+engineering/softaworks/dependency-updater	engineering/softaworks	skills/engineering/softaworks/dependency-updater/SKILL.md	1	1	canonical

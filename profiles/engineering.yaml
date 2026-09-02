@@ -24,6 +24,19 @@ load:
   - engineering/agent-rules-books/release-it
   - engineering/agent-rules-books/the-pragmatic-programmer
   - engineering/agent-rules-books/working-effectively-with-legacy-code
+  - engineering/addy/api-and-interface-design
+  - engineering/addy/ci-cd-and-automation
+  - engineering/addy/context-engineering
+  - engineering/addy/documentation-and-adrs
+  - engineering/addy/frontend-ui-engineering
+  - engineering/addy/git-workflow-and-versioning
+  - engineering/addy/performance-optimization
+  - engineering/addy/planning-and-task-breakdown
+  - engineering/addy/source-driven-development
+  - engineering/addy/using-agent-skills
+  - engineering/repo-docs/repo-docs
+  - engineering/repo-docs/repo-docs-zh
+  - engineering/softaworks/dependency-updater
 
 activation: available-on-demand
 guardrails:

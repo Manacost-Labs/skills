@@ -20,7 +20,7 @@ skill_contract:
     required:
       - name
       - description
-  id_pattern: '^[a-z0-9][a-z0-9-]*$'
+  id_pattern: '^[a-z0-9][a-z0-9-]*(/[a-z0-9][a-z0-9-]*)+$'
 
 profiles:
   - id: server
@@ -67,6 +67,18 @@ external_sources:
   - id: mattpocock/skills
     repository: https://github.com/mattpocock/skills
     imported_paths: five-requested-engineering-skills
+    license: MIT
+  - id: addyosmani/agent-skills
+    repository: https://github.com/addyosmani/agent-skills
+    imported_paths: ten-requested-engineering-skills
+    license: MIT
+  - id: YurunChen/repo-docs-skills
+    repository: https://github.com/YurunChen/repo-docs-skills
+    imported_paths: repo-docs-and-repo-docs-zh
+    license: NO LICENSE FILE FOUND
+  - id: softaworks/agent-toolkit
+    repository: https://github.com/softaworks/agent-toolkit
+    imported_paths: skills/dependency-updater
     license: MIT
 
 policy:

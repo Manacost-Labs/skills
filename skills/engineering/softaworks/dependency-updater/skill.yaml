@@ -1,0 +1,5 @@
+id: engineering/softaworks/dependency-updater
+name: dependency-updater
+namespace: engineering/softaworks
+status: canonical
+provenance: inventory/external-skills.tsv

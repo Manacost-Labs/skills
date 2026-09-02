@@ -14,6 +14,17 @@
   только явно выбранные skills: `codebase-design`, `diagnosing-bugs`,
   `domain-modeling`, `improve-codebase-architecture` и
   `resolving-merge-conflicts`. Остальные skills источника не включались.
+- [addyosmani/agent-skills](https://github.com/addyosmani/agent-skills) —
+  импортированы 10 явно выбранных engineering skills: API-контракты,
+  CI/CD, context engineering, ADR-документация, frontend UI, Git workflow,
+  performance, планирование, source-driven development и использование
+  skills.
+- [YurunChen/repo-docs-skills](https://github.com/YurunChen/repo-docs-skills) —
+  импортированы `repo-docs` и `repo-docs-zh` вместе с их локальными
+  reference-файлами и валидаторами. В закреплённой ревизии отдельный файл
+  лицензии не найден; это явно отражено в inventory и NOTICE.
+- [softaworks/agent-toolkit](https://github.com/softaworks/agent-toolkit) —
+  импортирован `dependency-updater` вместе с его вспомогательными скриптами.
 
 Commit SHA, путь внутри источника и локальный canonical id находятся в
 `inventory/external-skills.tsv`.

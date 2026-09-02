@@ -1,0 +1,5 @@
+id: engineering/addy/ci-cd-and-automation
+name: ci-cd-and-automation
+namespace: engineering/addy
+status: canonical
+provenance: inventory/external-skills.tsv

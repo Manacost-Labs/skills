@@ -1,0 +1,5 @@
+id: engineering/modularity/document
+name: document
+namespace: engineering/modularity
+status: canonical
+provenance: inventory/external-skills.tsv

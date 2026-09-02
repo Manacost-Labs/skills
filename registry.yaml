@@ -108,6 +108,34 @@ external_sources:
     repository: https://github.com/LambdaTest/agent-skills
     imported_paths: skills collection (72 skills)
     license: MIT
+  - id: me2resh/agent-decision-record
+    repository: https://github.com/me2resh/agent-decision-record
+    imported_paths: skills/decide and tools/codex/agdr-decide
+    license: CC-BY-4.0
+  - id: vladikk/modularity
+    repository: https://github.com/vladikk/modularity
+    imported_paths: skills collection (four skills)
+    license: CC-BY-NC-SA-4.0
+  - id: millionco/react-doctor
+    repository: https://github.com/millionco/react-doctor
+    imported_paths: three skills; skills/react-doctor skipped because core/react-doctor already exists
+    license: Modified MIT
+  - id: vercel-labs/next-skills
+    repository: https://github.com/vercel-labs/next-skills
+    imported_paths: redirect-only; current skills moved to vercel/next.js
+    license: see upstream repository
+  - id: vercel/next.js
+    repository: https://github.com/vercel/next.js
+    imported_paths: canary/skills collection (four skills)
+    license: MIT
+  - id: addyosmani/web-quality-skills
+    repository: https://github.com/addyosmani/web-quality-skills
+    imported_paths: skills collection (six skills)
+    license: MIT
+  - id: jezweb/claude-skills
+    repository: https://github.com/jezweb/claude-skills
+    imported_paths: plugins/frontend/skills/react-patterns
+    license: MIT
 
 policy:
   import_mode: additive

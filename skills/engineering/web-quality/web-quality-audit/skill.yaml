@@ -1,0 +1,5 @@
+id: engineering/web-quality/web-quality-audit
+name: web-quality-audit
+namespace: engineering/web-quality
+status: canonical
+provenance: inventory/external-skills.tsv

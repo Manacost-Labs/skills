@@ -48,6 +48,29 @@
   frameworks и CI. В Selenium Maven template добавлено явное безопасное
   ограничение `io.opentelemetry:opentelemetry-api` до `1.62.0` после security
   scan; исходный commit и изменение companion-файла отражены в provenance.
+- [me2resh/agent-decision-record](https://github.com/me2resh/agent-decision-record) —
+  добавлены универсальный `decide` и Codex-совместимый `agdr-decide` для
+  структурированной фиксации архитектурных решений. Это две разные
+  интеграционные формы одного upstream-стандарта.
+- [vladikk/modularity](https://github.com/vladikk/modularity) — добавлены
+  `balanced-coupling`, `design`, `document` и `review` для проектирования и
+  проверки модульной архитектуры.
+- [millionco/react-doctor](https://github.com/millionco/react-doctor) —
+  добавлены `improve-react`, `improve-threejs` и `performance`. Базовый
+  `react-doctor` уже был установлен как `core/react-doctor` и повторно не
+  импортировался.
+- [vercel-labs/next-skills](https://github.com/vercel-labs/next-skills) —
+  репозиторий является redirect на version-matched skills в
+  [vercel/next.js](https://github.com/vercel/next.js/tree/canary/skills).
+  Добавлены четыре актуальных навыка из `vercel/next.js`: Cache Components,
+  instant navigation/dev loop и Partial Prefetching.
+- [addyosmani/web-quality-skills](https://github.com/addyosmani/web-quality-skills) —
+  добавлены шесть навыков для Core Web Vitals, accessibility, SEO, performance,
+  best practices и общего web-quality audit.
+- [jezweb/claude-skills](https://github.com/jezweb/claude-skills) — добавлен
+  запрошенный `react-patterns`. В исходнике он помечен
+  `compatibility: claude-code-only`; это ограничение сохранено в canonical
+  файле и требует явного выбора только в совместимом агентском runtime.
 
 Commit SHA, путь внутри источника и локальный canonical id находятся в
 `inventory/external-skills.tsv`.
@@ -58,5 +81,15 @@ Commit SHA, путь внутри источника и локальный canon
 `AGENTS.md`. При конфликте действует более специфичное правило проекта;
 системные и security-инструкции всегда выше. Не загружай весь engineering
 профиль в каждый prompt: выбирай только нужные skills.
+
+## Security baseline
+
+Новые файлы прошли staged gitleaks scan и OSV scan без находок. Полный
+исторический `ai-security-check` всё ещё показывает пять pre-existing
+совпадений в ранее импортированных файлах
+`skills/engineering/qa/lambdatest/appium-skill/SKILL.md`,
+`skills/engineering/qa/lambdatest/xcuitest-skill/reference/playbook.md` и
+`skills/engineering/synthesis/synthesis-git-hooks/scripts/test_pre_commit.py`;
+они не изменялись в этом импорте и требуют отдельного baseline-review.
 
 Лицензии сохранены в `third_party/licenses/`.

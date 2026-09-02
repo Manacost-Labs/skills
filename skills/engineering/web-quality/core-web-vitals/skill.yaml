@@ -1,0 +1,5 @@
+id: engineering/web-quality/core-web-vitals
+name: core-web-vitals
+namespace: engineering/web-quality
+status: canonical
+provenance: inventory/external-skills.tsv

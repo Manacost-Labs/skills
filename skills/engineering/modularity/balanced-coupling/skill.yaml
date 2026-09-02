@@ -1,0 +1,5 @@
+id: engineering/modularity/balanced-coupling
+name: balanced-coupling
+namespace: engineering/modularity
+status: canonical
+provenance: inventory/external-skills.tsv

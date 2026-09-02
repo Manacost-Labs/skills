@@ -19,3 +19,9 @@ attributed to their original authors. Their licenses are copied verbatim into
 | [fugazi/test-automation-skills-agents](https://github.com/fugazi/test-automation-skills-agents) | QA automation skills catalog | See `inventory/external-skills.tsv` | MIT |
 | [balyakin/skill-eval-runner](https://github.com/balyakin/skill-eval-runner) | README-based local wrapper for the CLI | See `inventory/external-skills.tsv` | MIT |
 | [LambdaTest/agent-skills](https://github.com/LambdaTest/agent-skills) | Test automation skills catalog | See `inventory/external-skills.tsv` | MIT |
+| [me2resh/agent-decision-record](https://github.com/me2resh/agent-decision-record) | `decide` and Codex `agdr-decide` skills | See `inventory/external-skills.tsv` | CC-BY-4.0 |
+| [vladikk/modularity](https://github.com/vladikk/modularity) | Four modularity skills | See `inventory/external-skills.tsv` | CC-BY-NC-SA-4.0 |
+| [millionco/react-doctor](https://github.com/millionco/react-doctor) | Three additional React/Three.js performance skills | See `inventory/external-skills.tsv` | Modified MIT |
+| [vercel/next.js](https://github.com/vercel/next.js) | Four current Next.js workflow skills; source linked from `vercel-labs/next-skills` | See `inventory/external-skills.tsv` | MIT |
+| [addyosmani/web-quality-skills](https://github.com/addyosmani/web-quality-skills) | Six web quality skills | See `inventory/external-skills.tsv` | MIT |
+| [jezweb/claude-skills](https://github.com/jezweb/claude-skills) | `react-patterns` skill | See `inventory/external-skills.tsv` | MIT |

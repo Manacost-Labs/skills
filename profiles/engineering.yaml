@@ -192,6 +192,26 @@ load:
   - engineering/synthesis/synthesis-tree-of-thought
   - engineering/synthesis/synthesis-voice-profiler
   - engineering/synthesis/synthesis-writing-craft
+  - engineering/decision-record/decide
+  - engineering/decision-record/agdr-decide
+  - engineering/frontend/react-patterns
+  - engineering/modularity/balanced-coupling
+  - engineering/modularity/design
+  - engineering/modularity/document
+  - engineering/modularity/review
+  - engineering/next/next-cache-components-adoption
+  - engineering/next/next-cache-components-optimizer
+  - engineering/next/next-dev-loop
+  - engineering/next/next-partial-prefetching-adoption
+  - engineering/react-doctor/improve-react
+  - engineering/react-doctor/improve-threejs
+  - engineering/react-doctor/performance
+  - engineering/web-quality/accessibility
+  - engineering/web-quality/best-practices
+  - engineering/web-quality/core-web-vitals
+  - engineering/web-quality/performance
+  - engineering/web-quality/seo
+  - engineering/web-quality/web-quality-audit
 
 activation: available-on-demand
 guardrails:

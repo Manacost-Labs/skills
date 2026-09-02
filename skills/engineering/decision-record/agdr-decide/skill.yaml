@@ -1,0 +1,5 @@
+id: engineering/decision-record/agdr-decide
+name: agdr-decide
+namespace: engineering/decision-record
+status: canonical
+provenance: inventory/external-skills.tsv

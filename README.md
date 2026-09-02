@@ -47,7 +47,8 @@ skills/<namespace>/<skill-id>/SKILL.md
 - `hearthpulse` — сервисы HearthPulse;
 - `wordpress` — WordPress-сайты и плагины;
 - `data` — парсеры, контроль данных и Python.
-- `engineering` — общий слой архитектуры, отладки, DDD и безопасного рефакторинга.
+- `engineering` — общий слой архитектуры, отладки, DDD, UI/design system и
+  безопасного рефакторинга.
 
 Профиль `server` включает `engineering` как общий on-demand слой; это делает
 skills доступными всему серверу, но не заставляет загружать их все в каждый

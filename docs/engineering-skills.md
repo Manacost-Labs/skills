@@ -71,6 +71,21 @@
   запрошенный `react-patterns`. В исходнике он помечен
   `compatibility: claude-code-only`; это ограничение сохранено в canonical
   файле и требует явного выбора только в совместимом агентском runtime.
+- [mblode/agent-skills](https://github.com/mblode/agent-skills) — добавлен
+  `ui-design` с режимами direction, build, audit, retrofit и componentize,
+  а также связанными правилами accessibility, responsive UI и performance.
+- [softaworks/agent-toolkit](https://github.com/softaworks/agent-toolkit) — к
+  ранее импортированному `dependency-updater` добавлен
+  `design-system-starter` с design tokens, компонентной архитектурой,
+  темизацией и WCAG-чеклистом.
+- [nutlope/hallmark](https://github.com/nutlope/hallmark) — добавлен
+  `hallmark` для структурного дизайна, anti-slop аудита, responsive-проверок
+  и аккуратных motion-паттернов. Самостоятельный Hallmark CLI не копировался в
+  каталог навыков.
+- [arvindrk/extract-design-system](https://github.com/arvindrk/extract-design-system)
+  — добавлен `extract-design-system` для извлечения стартовых токенов из
+  публичных сайтов. Он не заменяет существующую дизайн-систему и не изменяет
+  проектный код без отдельного подтверждения.
 
 Commit SHA, путь внутри источника и локальный canonical id находятся в
 `inventory/external-skills.tsv`.

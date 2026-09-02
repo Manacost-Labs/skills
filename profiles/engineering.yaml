@@ -212,6 +212,10 @@ load:
   - engineering/web-quality/performance
   - engineering/web-quality/seo
   - engineering/web-quality/web-quality-audit
+  - engineering/mblode/ui-design
+  - engineering/softaworks/design-system-starter
+  - engineering/nutlope/hallmark
+  - engineering/arvindrk/extract-design-system
 
 activation: available-on-demand
 guardrails:

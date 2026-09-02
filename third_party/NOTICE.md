@@ -25,3 +25,7 @@ attributed to their original authors. Their licenses are copied verbatim into
 | [vercel/next.js](https://github.com/vercel/next.js) | Four current Next.js workflow skills; source linked from `vercel-labs/next-skills` | See `inventory/external-skills.tsv` | MIT |
 | [addyosmani/web-quality-skills](https://github.com/addyosmani/web-quality-skills) | Six web quality skills | See `inventory/external-skills.tsv` | MIT |
 | [jezweb/claude-skills](https://github.com/jezweb/claude-skills) | `react-patterns` skill | See `inventory/external-skills.tsv` | MIT |
+| [mblode/agent-skills](https://github.com/mblode/agent-skills) | `ui-design` skill | See `inventory/external-skills.tsv` | MIT |
+| [softaworks/agent-toolkit](https://github.com/softaworks/agent-toolkit) | `dependency-updater` and `design-system-starter` skills | See `inventory/external-skills.tsv` | MIT |
+| [nutlope/hallmark](https://github.com/nutlope/hallmark) | `hallmark` skill | See `inventory/external-skills.tsv` | MIT |
+| [arvindrk/extract-design-system](https://github.com/arvindrk/extract-design-system) | `extract-design-system` skill | See `inventory/external-skills.tsv` | MIT |

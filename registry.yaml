@@ -78,7 +78,7 @@ external_sources:
     license: NO LICENSE FILE FOUND
   - id: softaworks/agent-toolkit
     repository: https://github.com/softaworks/agent-toolkit
-    imported_paths: skills/dependency-updater
+    imported_paths: skills/dependency-updater and skills/design-system-starter
     license: MIT
   - id: muratcankoylan/Agent-Skills-for-Context-Engineering
     repository: https://github.com/muratcankoylan/Agent-Skills-for-Context-Engineering
@@ -135,6 +135,18 @@ external_sources:
   - id: jezweb/claude-skills
     repository: https://github.com/jezweb/claude-skills
     imported_paths: plugins/frontend/skills/react-patterns
+    license: MIT
+  - id: mblode/agent-skills
+    repository: https://github.com/mblode/agent-skills
+    imported_paths: skills/ui-design
+    license: MIT
+  - id: nutlope/hallmark
+    repository: https://github.com/nutlope/hallmark
+    imported_paths: skills/hallmark
+    license: MIT
+  - id: arvindrk/extract-design-system
+    repository: https://github.com/arvindrk/extract-design-system
+    imported_paths: skills/extract-design-system
     license: MIT
 
 policy:

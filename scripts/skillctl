@@ -1,0 +1,87 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+repo_root=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)
+inventory="$repo_root/inventory/skills.tsv"
+
+usage() {
+  cat <<'EOF'
+Usage:
+  skillctl list <profile>       List skills enabled by a profile
+  skillctl resolve <skill-id>   Print the canonical SKILL.md path
+  skillctl show <skill-id>      Print metadata and the canonical SKILL.md
+  skillctl check                Validate the catalog
+EOF
+}
+
+fail() {
+  printf 'skillctl: %s\n' "$1" >&2
+  exit 1
+}
+
+profile_file() {
+  local profile=$1
+  [[ "$profile" =~ ^[a-z0-9][a-z0-9-]*$ ]] || fail "invalid profile: $profile"
+  local file="$repo_root/profiles/$profile.yaml"
+  [[ -f "$file" ]] || fail "unknown profile: $profile"
+  printf '%s\n' "$file"
+}
+
+inventory_path() {
+  local skill_id=$1
+  local path
+  path=$(awk -F '\t' -v wanted="$skill_id" 'NR > 1 && $1 == wanted {print $3; exit}' "$inventory")
+  [[ -n "$path" ]] || fail "unknown skill id: $skill_id"
+  [[ -f "$repo_root/$path" ]] || fail "canonical file is missing: $path"
+  printf '%s\n' "$path"
+}
+
+list_profile() {
+  local profile=$1
+  local file
+  file=$(profile_file "$profile")
+  printf 'profile: %s\n' "$profile"
+  printf 'skills:\n'
+  while IFS= read -r skill_id; do
+    [[ -z "$skill_id" ]] && continue
+    printf '  %s\t%s\n' "$skill_id" "$(inventory_path "$skill_id")"
+  done < <(awk '/^load:/{active=1; next} /^[^[:space:]]/{active=0} active && /^  - [^\/]+\/[^[:space:]]+$/{print $2}' "$file")
+}
+
+show_skill() {
+  local skill_id=$1
+  local path
+  path=$(inventory_path "$skill_id")
+  printf 'id: %s\n' "$skill_id"
+  sed -n '1,20p' "$repo_root/${path%/SKILL.md}/skill.yaml"
+  printf '\n--- SKILL.md ---\n'
+  cat "$repo_root/$path"
+}
+
+command_name=${1:-}
+case "$command_name" in
+  list)
+    [[ $# -eq 2 ]] || { usage >&2; exit 2; }
+    list_profile "$2"
+    ;;
+  resolve)
+    [[ $# -eq 2 ]] || { usage >&2; exit 2; }
+    resolved_path=$(inventory_path "$2")
+    printf '%s\n' "$repo_root/$resolved_path"
+    ;;
+  show)
+    [[ $# -eq 2 ]] || { usage >&2; exit 2; }
+    show_skill "$2"
+    ;;
+  check)
+    [[ $# -eq 1 ]] || { usage >&2; exit 2; }
+    "$repo_root/scripts/validate-registry.sh"
+    ;;
+  -h|--help|help)
+    usage
+    ;;
+  *)
+    usage >&2
+    exit 2
+    ;;
+esac

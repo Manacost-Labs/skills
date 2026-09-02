@@ -57,6 +57,10 @@ The machine-readable index is `registry.yaml`. The server inventory and source
 hashes are in `inventory/skills.tsv`. Run `scripts/validate-registry.sh` after
 changing either one.
 
+Use `scripts/skillctl list <profile>` to inspect a profile and
+`scripts/skillctl resolve <skill-id>` to locate one canonical skill. These
+commands are read-only.
+
 ## Safe migration
 
 Import is additive. A skill moves through these states:

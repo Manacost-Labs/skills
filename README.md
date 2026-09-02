@@ -54,6 +54,8 @@ skills/<namespace>/<skill-id>/SKILL.md
 ./scripts/validate-registry.sh
 # после изменений в старых каталогах
 ./scripts/refresh-sources-inventory.sh
+# посмотреть активный набор
+./scripts/skillctl list openbot
 ```
 
 Проверка не требует установки Node или Bun: она валидирует структуру,

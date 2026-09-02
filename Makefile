@@ -1,7 +1,10 @@
-.PHONY: check security refresh-inventory
+.PHONY: check security refresh-inventory test
 
 check:
 	./scripts/validate-registry.sh
+
+test: check
+	./tests/skillctl.test.sh
 
 security:
 	/home/debian/server/tools/ai-quality/bin/ai-security-check

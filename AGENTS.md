@@ -41,28 +41,77 @@ short reason recorded in the handoff (for example: "not applicable",
 "project has no Go code", or "MCP is not configured in this client"). Never
 claim that a tool was used when it was only installed or mentioned.
 
+### 0. Reason first, then code
+
+Before implementation, the agent must make its reasoning inspectable and
+honest:
+
+- state material assumptions explicitly;
+- ask a question when the requirement or context is ambiguous;
+- present viable solution options when more than one approach is reasonable;
+- explain important trade-offs, including cost, risk, complexity, and
+  reversibility;
+- say clearly when it does not understand something or lacks evidence.
+
+Do not hide uncertainty behind confident wording or silently choose an
+interpretation that can materially change the result.
+
+### 0.1. Simplicity first
+
+Prefer the smallest solution that satisfies the verified acceptance criteria:
+
+- avoid unnecessary functions, abstractions, flexibility, and configuration;
+- do not increase architectural complexity without a concrete requirement;
+- prefer a clear 50-line solution over a speculative 200-line framework;
+- remove complexity only when its behavior and ownership are understood.
+
+### 0.2. Surgical changes
+
+Change only what belongs to the task:
+
+- do not perform opportunistic refactors or unrelated cleanup;
+- do not modify neighboring code without a demonstrated need;
+- preserve the project's existing style and conventions;
+- do not delete old or apparently unused code without explicit permission;
+- remove imports or functions only when they became unnecessary because of
+  the current change.
+
+### 0.3. Verifiable goals
+
+Every task must have a concrete, testable success criterion:
+
+- bug fix: first add a test that reproduces the failure;
+- validation change: test invalid, boundary, and accepted input;
+- refactor: prove behavior with tests before and after the change;
+- multi-step task: write a plan and verify each stage before continuing.
+
+The required outcome is not merely a plausible explanation or a code diff; it
+is a result that can be checked with evidence.
+
 ### 1. Mandatory preflight for every task
 
 Before searching code or proposing a patch, the agent must:
 
 1. read `/srv/projects/AGENTS.md` and the nearest project `AGENTS.md`;
-2. identify the project root and select its profile with
+2. run the Context Scout gate described below, before selecting skills,
+   tools, or MCPs;
+3. identify the project root and select its profile with
    `scripts/skillctl plan <project-root>`; use `server` for shared-server
    work and the detected project profile for application work;
-3. load the smallest applicable set from the selected profile with
+4. load the smallest applicable set from the selected profile with
    `scripts/skillctl list <profile>` and resolve each canonical skill with
    `scripts/skillctl resolve <skill-id>`;
-4. use `using-agent-skills` to decide applicability and
+5. use `using-agent-skills` to decide applicability and
    `planning-and-task-breakdown` for every non-trivial task. The plan must
    state scope, files, dependencies, acceptance criteria, verification, and
    safe parallel/sequential boundaries;
-5. run `git status --short`, `git diff --name-only`, and `git worktree list`
+6. run `git status --short`, `git diff --name-only`, and `git worktree list`
    before any edit. Record the starting changed paths and treat them as
    protected work owned by the user or another session;
-6. if the project has `.codegraph/`, run `codegraph explore "<question>"`
+7. if the project has `.codegraph/`, run `codegraph explore "<question>"`
    before broad text search. Use Serena for symbol-aware navigation when its
    MCP is available and the task involves a non-trivial code relationship;
-7. state the MCP decision before implementation: which applicable MCPs will
+8. state the MCP decision before implementation: which applicable MCPs will
    be used, what each will verify, and why an applicable MCP is unavailable if
    it cannot be called.
 
@@ -72,6 +121,75 @@ test first, make it pass, then refactor. For delivery or
 CI changes, `ci-cd-and-automation` is mandatory. For code changes,
 `git-workflow-and-versioning` is mandatory. For a large context, long-running
 task, or context handoff, also load the relevant context-engineering skill.
+
+### Mandatory 5.6 Luna sub-agent gates
+
+For every task that can change code, configuration, dependencies,
+infrastructure, tests, documentation, or release state, use two explicit
+sub-agent gates. The required model/alias for both gates is **`5.6 Luna`**.
+Use the native sub-agent/thread mechanism exposed by the current client, or
+the configured dev-team mechanism when it supports model selection. These
+gates are part of execution, not optional background advice.
+
+#### Gate A: context before implementation
+
+Before choosing skills, tools, or MCPs, start one read-only Context Scout on
+`5.6 Luna`. It must not edit files, access secrets, commit, push, deploy, or
+change external state. Ask it to return a compact `CONTEXT BRIEF` containing:
+
+- task goal, scope, non-goals, and acceptance criteria;
+- repository root, applicable `AGENTS.md` files, profile, and active-session
+  or worktree ownership signals;
+- baseline changed paths and protected paths;
+- relevant files, symbols, tests, architecture constraints, and dependencies;
+- risks, unknowns, likely regressions, and the smallest useful verification;
+- recommended skills, tools, and MCPs with a reason for each.
+
+The main agent must validate this brief against local repository evidence. The
+brief never replaces the mandatory `AGENTS.md` read, worktree check, or the
+main agent's responsibility for selecting and invoking applicable skills and
+tools.
+
+#### Gate B: documentation and micro-review after implementation
+
+After implementation and focused tests, but before the final quality gate,
+start a second independent documentation/review sub-agent on `5.6 Luna`.
+Give it the implementation diff and the Context Brief. Its code review is
+read-only by default; it may write only the explicitly assigned documentation
+described below. It must:
+
+- write or update only the task-scoped documentation, ADR, README, or handoff
+  notes explicitly assigned to it; never invent behavior that the code does
+  not implement;
+- review the code for small errors, edge cases, stale context, test gaps,
+  dead code, inconsistent naming, and unclear handoff details;
+- report architecture, cleanliness, security, and performance concerns even
+  when they are outside the requested fix, clearly marked as follow-up;
+- return a `REVIEW BRIEF` with documentation changes, findings by severity,
+  evidence, test gaps, residual risks, and recommended next actions.
+
+The reviewer must not modify another session's paths, authentication/sign-in
+files, secrets, production copies, or unrelated documents. Documentation edits
+must be disjoint from concurrent work or explicitly coordinated before the
+reviewer writes them. Code findings are advisory until the main agent verifies
+and resolves them.
+
+#### Model availability and final ownership
+
+Attempt the exact `5.6 Luna` alias and record the result. Never claim that a
+sub-agent ran when the client did not expose or execute it. If the alias is
+unavailable, record `5.6 Luna: unavailable`; for low-risk work use the closest
+available read-only reviewer only when safe, and for high-risk, production,
+authentication, migration, or security-sensitive work stop and request a
+model/coordination decision before editing.
+
+The main agent remains accountable for the final result. Before responding it
+must inspect both briefs, resolve all Critical/Required findings, and perform
+the final checks for correctness, bugs, code cleanliness/readability,
+architecture, security, performance, and repository hygiene. Run focused tests
+first, then the project gate and applicable browser/API/CI/security checks.
+Record skipped checks and the reason; do not turn an unavailable sub-agent or
+failed check into an unqualified pass.
 
 ### 2. Parallel-session safety protocol
 
@@ -219,7 +337,9 @@ Every implementation handoff must include:
    checks from the routing matrix;
 6. a final `git status --short` and `git diff --name-only` comparison against
    the baseline;
-7. failures, baseline debt, skipped tools with reasons, residual risks, and
+7. the `CONTEXT BRIEF` and `REVIEW BRIEF`, including the actual `5.6 Luna`
+   availability/execution status;
+8. failures, baseline debt, skipped tools with reasons, residual risks, and
    the exact next action.
 
 Do not disable a failing check, weaken a rule, or label a partial scan as a

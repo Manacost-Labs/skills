@@ -129,7 +129,6 @@ load:
   - engineering/qa/lambdatest/xcuitest-skill
   - engineering/qa/lambdatest/xunit-skill
   - engineering/qa/skill-eval-runner
-  - engineering/qa/skill-eval-runner
   - engineering/synthesis/synthesis-absence-coordination
   - engineering/synthesis/synthesis-adversarial-review
   - engineering/synthesis/synthesis-agent-conformance

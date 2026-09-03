@@ -25,6 +25,31 @@ grep -q '^profile: openbot$' <<< "$plan"
 grep -q '^legacy_skill_files: 1$' <<< "$plan"
 grep -q '^migration: dry-run$' <<< "$plan"
 
+empty_project="$tmp_project/empty/work.kolodahearthstone.com"
+mkdir -p "$empty_project/.claude/skills"
+empty_plan=$($skillctl plan "$empty_project")
+grep -q '^profile: openbot$' <<< "$empty_plan"
+grep -q '^legacy_skill_files: 0$' <<< "$empty_plan"
+
+valid_response=$($skillctl check-response <<'EOF'
+Сделано: добавлена проверка формата ответа агента.
+Проверки: skillctl smoke tests прошли.
+Git: Commit: нет; Push: не выполнялся — не запрашивался.
+Дальше:
+- закоммитить изменение;
+- подключить проверку в CI.
+EOF
+)
+grep -q '^response format: ok$' <<< "$valid_response"
+
+if $skillctl check-response <<'EOF' >/dev/null 2>&1
+Готово.
+EOF
+then
+  printf '%s\n' 'expected incomplete response to fail' >&2
+  exit 1
+fi
+
 mkdir -p "$tmp_project/work.kolodahearthstone.com/.agents/skills/botforge"
 cp "$repo_root/skills/core/botforge/SKILL.md" "$tmp_project/work.kolodahearthstone.com/.agents/skills/botforge/SKILL.md"
 audit=$($skillctl audit "$tmp_project/work.kolodahearthstone.com")

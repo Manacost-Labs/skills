@@ -1,0 +1,111 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+usage() {
+  cat <<'EOF'
+Usage:
+  check-agent-response [--trivial] [response-file]
+
+Read a final agent response from a file or stdin and validate its concise
+handoff structure. Use --trivial for a genuinely trivial one- or two-sentence
+task; Git status is still required.
+EOF
+}
+
+mode=standard
+response_file=''
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    --trivial)
+      mode=trivial
+      ;;
+    -h|--help)
+      usage
+      exit 0
+      ;;
+    --)
+      shift
+      [[ $# -le 1 ]] || { usage >&2; exit 2; }
+      [[ $# -eq 1 ]] && response_file=$1
+      break
+      ;;
+    -*)
+      printf 'check-agent-response: unknown option: %s\n' "$1" >&2
+      usage >&2
+      exit 2
+      ;;
+    *)
+      [[ -z "$response_file" ]] || { usage >&2; exit 2; }
+      response_file=$1
+      ;;
+  esac
+  shift
+done
+
+if [[ -n "$response_file" ]]; then
+  [[ -f "$response_file" ]] || {
+    printf 'check-agent-response: response file is missing: %s\n' "$response_file" >&2
+    exit 2
+  }
+  response=$(<"$response_file")
+else
+  response=$(cat)
+fi
+response=${response//$'\r'/}
+
+errors=()
+has_pattern() {
+  grep -Eiq "$1" <<< "$response"
+}
+
+if [[ -z "${response//[$' \t\n']/}" ]]; then
+  errors+=("response is empty")
+fi
+
+nonempty_lines=$(printf '%s\n' "$response" | awk 'NF { count++ } END { print count + 0 }')
+max_lines=24
+[[ "$mode" == trivial ]] && max_lines=8
+if (( nonempty_lines > max_lines )); then
+  errors+=("response has $nonempty_lines non-empty lines; maximum is $max_lines")
+fi
+
+if ! has_pattern '(^|[[:space:]])(Done|Сделано|Status|Статус):'; then
+  errors+=("missing Done/Сделано or Status/Статус")
+fi
+if ! has_pattern '(^|[[:space:]])(Checks|Проверки):'; then
+  errors+=("missing Checks/Проверки")
+fi
+
+git_line=$(grep -Eim1 '(^|[[:space:]])(Git|Гит):' <<< "$response" || true)
+if [[ -z "$git_line" ]]; then
+  errors+=("missing Git/Гит line")
+else
+  if ! grep -Eiq '(Commit|Коммит):[[:space:]]*(yes|no|да|нет|not[[:space:]]+(made|created|performed)|не[[:space:]]+(создан|сделан|выполнен))' <<< "$git_line"; then
+    errors+=("Git line must state Commit: yes/no")
+  fi
+  if ! grep -Eiq '(Push|Пуш):[[:space:]]*(yes|no|да|нет|not[[:space:]]+performed|не[[:space:]]+(выполнялся|выполнен|делался))' <<< "$git_line"; then
+    errors+=("Git line must state Push: yes/no or not performed")
+  fi
+fi
+
+if [[ "$mode" != trivial ]] && ! has_pattern '(^|[[:space:]])(Next|Дальше):'; then
+  errors+=("missing Next/Дальше")
+fi
+
+next_options=$(printf '%s\n' "$response" | awk '
+  BEGIN { in_next = 0; count = 0 }
+  /^(Next|Дальше):/ { in_next = 1; next }
+  in_next && /^[[:space:]]*([-*]|[0-9]+[.)])[[:space:]]/ { count++ }
+  END { print count + 0 }
+')
+if (( next_options > 3 )); then
+  errors+=("Next/Дальше contains $next_options options; maximum is 3")
+fi
+
+if ((${#errors[@]} > 0)); then
+  printf '%s\n' 'response format: failed' >&2
+  printf ' - %s\n' "${errors[@]}" >&2
+  exit 1
+fi
+
+printf '%s\n' 'response format: ok'

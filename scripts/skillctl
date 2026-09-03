@@ -12,6 +12,7 @@ Usage:
   skillctl show <skill-id>      Print metadata and the canonical SKILL.md
   skillctl plan <project-root>  Show a read-only migration plan
   skillctl audit <project-root> Compare local skills with the catalog
+  skillctl check-response       Validate a concise agent handoff
   skillctl check                Validate the catalog
 EOF
 }
@@ -92,7 +93,7 @@ plan_project() {
   for loader in .agents/skills .claude/skills .codex/skills; do
     if [[ -d "$project_root/$loader" ]]; then
       local loader_count
-      loader_count=$(rg --files --hidden -g 'SKILL.md' "$project_root/$loader" 2>/dev/null | wc -l)
+      loader_count=$(rg --files --hidden -g 'SKILL.md' "$project_root/$loader" 2>/dev/null | wc -l || true)
       legacy_count=$((legacy_count + loader_count))
     fi
   done
@@ -173,6 +174,10 @@ case "$command_name" in
     ;;
   audit)
     audit_project "$2"
+    ;;
+  check-response)
+    shift
+    exec "$repo_root/scripts/check-agent-response" "$@"
     ;;
   check)
     [[ $# -eq 1 ]] || { usage >&2; exit 2; }

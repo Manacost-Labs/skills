@@ -1,0 +1,12 @@
+---
+description: Load the canonical Manacost Labs server policy for every Cursor Agent chat
+alwaysApply: true
+---
+
+Before doing any work, read and follow the canonical policy file in full:
+`/srv/projects/tools/skills/AGENTS.md`
+
+This file is the single global policy source for the supported clients on this
+server. Apply system, platform, developer, security, project, and user
+instructions according to the precedence defined there; do not treat this
+adapter as a replacement for a nearer project or vendor policy file.

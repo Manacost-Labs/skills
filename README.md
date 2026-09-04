@@ -75,8 +75,12 @@ skills доступными всему серверу, но не заставл�
 Серверные entrypoint-файлы `/home/debian/AGENTS.md`,
 `/srv/projects/AGENTS.md` и `/home/debian/server/AGENTS.md`, а также глобальные
 файлы обнаруженных клиентов `/home/debian/.codex/AGENTS.md`,
-`/home/debian/.config/opencode/AGENTS.md`, `/home/debian/.claude/CLAUDE.md` и
-`/home/debian/.gemini/GEMINI.md` должны быть ссылками на этот `AGENTS.md`.
+`/home/debian/.config/opencode/AGENTS.md`, `/home/debian/.claude/CLAUDE.md`,
+`/home/debian/.gemini/GEMINI.md`, `/home/debian/.dsh/AGENTS.md`,
+`/home/debian/.hermes/AGENTS.md` и `/home/debian/.cursor/rules/AGENTS.md`
+должны быть ссылками на этот `AGENTS.md`. Для Cursor дополнительно действует
+always-on адаптер `/home/debian/.cursor/rules/manacost-global.mdc`, который
+ссылается на `integrations/cursor/manacost-global.mdc`.
 Серверные ссылки устанавливаются через `scripts/install-server-entrypoints.sh`.
 Глобальные ссылки клиентов устанавливаются через
 `scripts/install-global-agent-entrypoints.sh --adopt-existing`; перед заменой
@@ -85,8 +89,9 @@ skills доступными всему серверу, но не заставл�
 
 Это гарантирует единый источник для обнаруженных клиентов и рабочих корней,
 но не может заставить произвольный ИИ-клиент, который игнорирует файловые
-инструкции, прочитать их. Ближайшие project/vendor policy-файлы сохраняются и
-могут дополнять правила для своего проекта.
+инструкции, прочитать их. Для Hermes `SOUL.md` намеренно остаётся отдельным
+файлом личности, а ближайшие project/vendor policy-файлы сохраняются и могут
+дополнять правила для своего проекта.
 
 Проверка не требует установки Node или Bun: она валидирует структуру,
 уникальность ids, обязательные frontmatter-поля и отсутствие очевидных

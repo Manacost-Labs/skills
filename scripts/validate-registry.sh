@@ -18,11 +18,11 @@ fail() {
 [[ -f "$source_inventory" ]] || fail "missing inventory/sources.tsv"
 [[ -f "$external_inventory" ]] || fail "missing inventory/external-skills.tsv"
 
-for required in AGENTS.md README.md docs/migration.md docs/engineering-skills.md docs/agent-entrypoints.md profiles/server.yaml profiles/openbot.yaml profiles/hearthpulse.yaml profiles/wordpress.yaml profiles/data.yaml profiles/engineering.yaml third_party/NOTICE.md scripts/check-agent-entrypoints.sh scripts/install-global-agent-entrypoints.sh; do
+for required in AGENTS.md README.md docs/migration.md docs/engineering-skills.md docs/agent-entrypoints.md integrations/cursor/manacost-global.mdc profiles/server.yaml profiles/openbot.yaml profiles/hearthpulse.yaml profiles/wordpress.yaml profiles/data.yaml profiles/engineering.yaml third_party/NOTICE.md scripts/check-agent-entrypoints.sh scripts/install-global-agent-entrypoints.sh; do
   [[ -f "$repo_root/$required" ]] || fail "missing $required"
 done
 
-for entrypoint in /home/debian/.codex/AGENTS.md /home/debian/.config/opencode/AGENTS.md /home/debian/.claude/CLAUDE.md /home/debian/.gemini/GEMINI.md; do
+for entrypoint in /home/debian/.codex/AGENTS.md /home/debian/.config/opencode/AGENTS.md /home/debian/.claude/CLAUDE.md /home/debian/.gemini/GEMINI.md /home/debian/.dsh/AGENTS.md /home/debian/.hermes/AGENTS.md /home/debian/.cursor/rules/AGENTS.md; do
   if [[ -L "$entrypoint" ]]; then
     [[ "$(readlink "$entrypoint")" == "$repo_root/AGENTS.md" ]] || fail "global agent entrypoint points elsewhere: $entrypoint"
   elif [[ -e "$entrypoint" ]]; then
@@ -31,6 +31,16 @@ for entrypoint in /home/debian/.codex/AGENTS.md /home/debian/.config/opencode/AG
     printf 'WARNING: global agent entrypoint is not installed: %s\n' "$entrypoint" >&2
   fi
 done
+
+cursor_adapter=/home/debian/.cursor/rules/manacost-global.mdc
+cursor_adapter_target="$repo_root/integrations/cursor/manacost-global.mdc"
+if [[ -L "$cursor_adapter" ]]; then
+  [[ "$(readlink "$cursor_adapter")" == "$cursor_adapter_target" ]] || fail "Cursor global adapter points elsewhere: $cursor_adapter"
+elif [[ -e "$cursor_adapter" ]]; then
+  fail "Cursor global adapter is not a symlink: $cursor_adapter"
+else
+  printf 'WARNING: Cursor global adapter is not installed: %s\n' "$cursor_adapter" >&2
+fi
 
 if [[ -f "$registry" ]]; then
   rg -q '^version: [0-9]+$' "$registry" || fail "registry has no version"

@@ -7,7 +7,11 @@ The server entrypoints `/srv/projects/AGENTS.md`, `/home/debian/server/AGENTS.md
 and `/home/debian/AGENTS.md` are intended to point to this same file. The
 known client-global entrypoints `/home/debian/.codex/AGENTS.md`,
 `/home/debian/.config/opencode/AGENTS.md`, `/home/debian/.claude/CLAUDE.md`,
-and `/home/debian/.gemini/GEMINI.md` are also intended to point to this file.
+`/home/debian/.gemini/GEMINI.md`, `/home/debian/.dsh/AGENTS.md`,
+`/home/debian/.hermes/AGENTS.md`, and `/home/debian/.cursor/rules/AGENTS.md`
+are also intended to point to this file. Cursor additionally uses the tracked
+always-on adapter `integrations/cursor/manacost-global.mdc`, installed at
+`/home/debian/.cursor/rules/manacost-global.mdc`.
 Keep this file in the repository; do not edit an entrypoint as a separate
 policy copy. Install server links with `scripts/install-server-entrypoints.sh`,
 client links with `scripts/install-global-agent-entrypoints.sh`, and verify all
@@ -16,7 +20,9 @@ known links with `scripts/check-agent-entrypoints.sh`.
 For supported clients on this host, this file is the single global policy
 source. Project-specific and vendor-specific policy files remain in place and
 may add narrower rules under the precedence defined below; they are not
-silently replaced by the global installation script.
+silently replaced by the global installation script. Hermes loads
+`~/.hermes/AGENTS.md` only when its workspace discovery reaches that directory;
+its `SOUL.md` is a separate personality file and is intentionally preserved.
 
 ## Authority and precedence
 

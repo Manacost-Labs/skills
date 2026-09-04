@@ -12,7 +12,14 @@ global_agent_entrypoints:
   - /home/debian/.config/opencode/AGENTS.md
   - /home/debian/.claude/CLAUDE.md
   - /home/debian/.gemini/GEMINI.md
+  - /home/debian/.dsh/AGENTS.md
+  - /home/debian/.hermes/AGENTS.md
+  - /home/debian/.cursor/rules/AGENTS.md
 global_entrypoint_install_script: scripts/install-global-agent-entrypoints.sh
+global_agent_adapters:
+  - client: cursor
+    entrypoint: /home/debian/.cursor/rules/manacost-global.mdc
+    source: integrations/cursor/manacost-global.mdc
 entrypoint_check_script: scripts/check-agent-entrypoints.sh
 inventory_file: inventory/skills.tsv
 source_inventory_file: inventory/sources.tsv

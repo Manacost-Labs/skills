@@ -6,6 +6,7 @@ load:
   - core/agent-roster
   - core/dev-team
   - core/botforge
+  - engineering/graph/graphify-server-map
 
 include:
   - engineering

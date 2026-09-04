@@ -215,6 +215,10 @@ load:
   - engineering/softaworks/design-system-starter
   - engineering/nutlope/hallmark
   - engineering/arvindrk/extract-design-system
+  - engineering/superpowers/brainstorming
+  - engineering/superpowers/writing-plans
+  - engineering/superpowers/requesting-code-review
+  - engineering/mattpocock/grill-with-docs
 
 activation: available-on-demand
 guardrails:

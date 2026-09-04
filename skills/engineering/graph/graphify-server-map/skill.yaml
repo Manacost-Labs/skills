@@ -1,0 +1,5 @@
+id: engineering/graph/graphify-server-map
+name: graphify-server-map
+namespace: engineering/graph
+status: canonical
+provenance: inventory/external-skills.tsv

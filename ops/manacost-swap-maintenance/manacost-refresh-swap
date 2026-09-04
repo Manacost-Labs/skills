@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+readonly swap_threshold_percent=70
+readonly minimum_headroom_kib=$((2 * 1024 * 1024))
+
+meminfo_value() {
+	awk -v key="$1" '$1 == key { print $2; exit }' /proc/meminfo
+}
+
+swap_total_kib=$(meminfo_value SwapTotal:)
+swap_free_kib=$(meminfo_value SwapFree:)
+mem_available_kib=$(meminfo_value MemAvailable:)
+
+if [[ -z "$swap_total_kib" || "$swap_total_kib" -eq 0 ]]; then
+	printf '%s\n' 'swap maintenance: no swap configured'
+	exit 0
+fi
+
+swap_used_kib=$((swap_total_kib - swap_free_kib))
+swap_used_percent=$((swap_used_kib * 100 / swap_total_kib))
+
+if ((swap_used_percent < swap_threshold_percent)); then
+	printf 'swap maintenance: usage %s%%, below %s%% threshold\n' \
+		"$swap_used_percent" "$swap_threshold_percent"
+	exit 0
+fi
+
+if ((mem_available_kib < swap_used_kib + minimum_headroom_kib)); then
+	printf 'swap maintenance: deferred at %s%% usage; available RAM is below safety headroom\n' \
+		"$swap_used_percent"
+	exit 0
+fi
+
+printf 'swap maintenance: refreshing %s KiB of used swap\n' "$swap_used_kib"
+/sbin/swapoff -a
+/sbin/swapon -a
+printf '%s\n' 'swap maintenance: refresh complete'

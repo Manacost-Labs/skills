@@ -1,0 +1,12 @@
+[Unit]
+Description=Periodic safe swap maintenance
+
+[Timer]
+OnBootSec=15min
+OnUnitActiveSec=6h
+Persistent=true
+RandomizedDelaySec=15min
+Unit=manacost-swap-maintenance.service
+
+[Install]
+WantedBy=timers.target

@@ -72,6 +72,14 @@ sources:
     - /home/debian/.codex/plugins/cache
 
 external_sources:
+  - id: obra/superpowers
+    repository: https://github.com/obra/superpowers
+    imported_paths: three derived workflow skills
+    license: MIT
+  - id: Graphify-Labs/graphify
+    repository: https://github.com/Graphify-Labs/graphify
+    imported_paths: derived server map workflow from graphify/skill-codex.md
+    license: Apache-2.0
   - id: ciembor/agent-rules-books
     repository: https://github.com/ciembor/agent-rules-books
     imported_variant: mini
@@ -81,7 +89,7 @@ external_sources:
     license: MIT
   - id: mattpocock/skills
     repository: https://github.com/mattpocock/skills
-    imported_paths: five-requested-engineering-skills
+    imported_paths: six-requested-engineering-skills-plus-grill-adaptation
     license: MIT
   - id: addyosmani/agent-skills
     repository: https://github.com/addyosmani/agent-skills

@@ -5,6 +5,12 @@
 
 ## Импортированные источники
 
+- [obra/superpowers](https://github.com/obra/superpowers) — адаптированы
+  brainstorming, writing-plans и requesting-code-review; они не заменяют
+  общий policy-файл и не устанавливают второй глобальный workflow.
+- [Graphify-Labs/graphify](https://github.com/Graphify-Labs/graphify) — добавлен
+  явный code-only server-map workflow с изолированными результатами; полное
+  индексирование сервера намеренно не запускается автоматически.
 - [ciembor/agent-rules-books](https://github.com/ciembor/agent-rules-books) —
   импортированы компактные `mini`-версии инженерных rule-set’ов. Сам источник
   рекомендует `mini` для обычной работы, оставляя `full` как полный вариант.

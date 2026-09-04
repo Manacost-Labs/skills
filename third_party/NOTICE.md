@@ -6,9 +6,11 @@ attributed to their original authors. Their licenses are copied verbatim into
 
 | Source | Imported material | Revision | License |
 | --- | --- | --- | --- |
+| [obra/superpowers](https://github.com/obra/superpowers) | Three derived workflow skills: brainstorming, writing-plans, and requesting-code-review | See `inventory/external-skills.tsv` | MIT |
+| [Graphify-Labs/graphify](https://github.com/Graphify-Labs/graphify) | Derived safe server-map workflow and helper | See `inventory/external-skills.tsv` | Apache-2.0 |
 | [ciembor/agent-rules-books](https://github.com/ciembor/agent-rules-books) | `mini` rule sets | See `inventory/external-skills.tsv` | MIT |
 | [nathankim0/clean-architecture-skills](https://github.com/nathankim0/clean-architecture-skills) | Clean Architecture and Kent Beck skills | See `inventory/external-skills.tsv` | MIT |
-| [mattpocock/skills](https://github.com/mattpocock/skills) | Five requested engineering skills | See `inventory/external-skills.tsv` | MIT |
+| [mattpocock/skills](https://github.com/mattpocock/skills) | Six requested engineering skills, including the adapted `grill-with-docs` workflow | See `inventory/external-skills.tsv` | MIT |
 | [addyosmani/agent-skills](https://github.com/addyosmani/agent-skills) | Ten requested engineering skills | See `inventory/external-skills.tsv` | MIT |
 | [YurunChen/repo-docs-skills](https://github.com/YurunChen/repo-docs-skills) | `repo-docs` and `repo-docs-zh` skills | See `inventory/external-skills.tsv` | No license file found in pinned revision |
 | [softaworks/agent-toolkit](https://github.com/softaworks/agent-toolkit) | `dependency-updater` skill | See `inventory/external-skills.tsv` | MIT |

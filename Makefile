@@ -5,6 +5,7 @@ check:
 
 test: check
 	./tests/skillctl.test.sh
+	./tests/graphify-server-map.test.sh
 
 entrypoints:
 	./scripts/check-agent-entrypoints.sh

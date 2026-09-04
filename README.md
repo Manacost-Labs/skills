@@ -21,6 +21,7 @@ inventory/skills.tsv      снимок навыков и хэшей исходн
 inventory/sources.tsv     все найденные исходные пути и их хэши
 scripts/                  безопасные проверки и аудит
 docs/migration.md         порядок подключения проектов
+docs/upstream-skills-roadmap.md  решения по новым upstream skills
 ```
 
 Канонический путь навыка:

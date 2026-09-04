@@ -1,8 +1,15 @@
 # Graph publishing
 
-The current Graphify pilot is a static, code-only map of the canonical skills
-repository. Its source graph and report stay under `/srv/graphify/maps`; only
-the generated HTML is copied to `/var/www/graph.kolodahearthstone.com`.
+`graph.kolodahearthstone.com` is a static portal for the important server
+repositories listed in `ops/graph-portal/repositories.tsv`. It includes one
+code map per repository and an aggregate “whole server” map.
+
+The builder exports every repository from Git `HEAD` into a temporary snapshot
+before Graphify runs. Untracked files, task worktrees, uploads, caches, and
+common secret/key filenames are therefore not indexed. Only generated HTML and
+the public repository label manifest are deployed; graph JSON and reports stay
+outside the web root. The generated Mermaid runtime is pinned to a reviewed
+exact version during the build.
 
 The nginx origin is defined in
 `ops/nginx/graph.kolodahearthstone.com.conf`. It serves the HTML and `/healthz`
@@ -10,24 +17,27 @@ only, denies directory traversal by `try_files`, and sends restrictive browser
 headers. `graph.json`, `GRAPH_REPORT.md`, source files, and map internals are
 not placed in the public web root.
 
-The DNS zone is hosted by Cloudflare. Add an A record for
-`graph.kolodahearthstone.com` pointing to `151.80.21.140` (and an AAAA record
-to `2001:41d0:c:c8c::` only if that address is intended to serve this site).
-After DNS resolves, issue a dedicated certificate with Certbot and add an HTTPS
-server block before redirecting HTTP to HTTPS. The existing root-domain
-certificate does not cover this subdomain.
+The DNS zone is hosted by Cloudflare. The A and AAAA records point to the nginx
+origin and are proxied. The origin uses a dedicated Cloudflare Origin CA
+certificate, while browsers receive Cloudflare's publicly trusted edge
+certificate. HTTP redirects to HTTPS.
 
-To publish a refreshed pilot map:
+To build a release at low system priority:
 
 ```bash
-sudo install -d -o root -g root -m 0755 /var/www/graph.kolodahearthstone.com
-sudo install -o root -g root -m 0644 \
-  /srv/graphify/maps/srv-projects-tools-skills/graph.html \
-  /var/www/graph.kolodahearthstone.com/index.html
-sudo nginx -t && sudo systemctl reload nginx
+release=/srv/graphify/maps/releases/$(date -u +%Y%m%dT%H%M%SZ)
+ionice -c3 nice -n 19 ops/graph-portal/build-graph-portal.sh --output "$release"
 ```
 
-Before expanding to all projects, run a dry-run and check resource pressure.
-The public map is navigation metadata, not an authorization boundary; do not
-publish a graph containing secrets, production paths, or private source
-details.
+Validate and atomically publish it with:
+
+```bash
+ops/graph-portal/publish-graph-portal.sh "$release"
+```
+
+The publisher verifies that every manifest entry has a map, synchronizes into
+a versioned release with stale files deleted, validates nginx, and atomically
+switches the `current` symlink. The previous release remains available for
+rollback but is not reachable from the web root. The public map is navigation
+metadata, not an authorization boundary; review the repository manifest before
+adding a project.

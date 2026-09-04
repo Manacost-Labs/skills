@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#0a0b10">
+  <title>Карта сервера · Manacost Labs</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="/" aria-label="Manacost Labs — карта сервера">
+      <span class="brand-mark" aria-hidden="true">M</span>
+      <span><strong>MANACOST LABS</strong><small>SERVER GRAPH</small></span>
+    </a>
+    <div class="live"><span aria-hidden="true"></span>GRAPHIFY ONLINE</div>
+  </header>
+
+  <main class="workspace">
+    <aside class="sidebar" aria-label="Репозитории">
+      <div class="sidebar-heading">
+        <p>Навигация</p>
+        <h1>Карта кода</h1>
+        <span>Связи, компоненты и точки входа важных проектов.</span>
+      </div>
+      <label class="mobile-picker" for="repository-select">Репозиторий</label>
+      <select id="repository-select" aria-label="Выберите репозиторий"></select>
+      <nav id="repository-list" class="repository-list" aria-label="Список репозиториев"></nav>
+      <div class="privacy-note">
+        <span aria-hidden="true">◆</span>
+        Только отслеживаемый Git-код. Секреты, загрузки и кэши исключены.
+      </div>
+    </aside>
+
+    <section class="viewer" aria-labelledby="current-title">
+      <div class="viewer-heading">
+        <div>
+          <p id="current-group">SERVER OVERVIEW</p>
+          <h2 id="current-title">Весь сервер</h2>
+        </div>
+        <a id="open-map" class="open-map" href="/graphs/whole-server.html" target="_blank" rel="noopener">Открыть отдельно ↗</a>
+      </div>
+      <div class="frame-shell">
+        <div id="loading" class="loading" role="status">Загружаю карту…</div>
+        <iframe id="graph-frame" title="Интерактивная карта кода" src="/graphs/whole-server.html" loading="lazy"></iframe>
+      </div>
+    </section>
+  </main>
+
+  <noscript>Для переключения интерактивных карт нужен JavaScript.</noscript>
+  <script src="/app.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,12 @@
+# slug	label	repository	group
+skills	Skills catalog	/srv/projects/tools/skills	Platform
+heartpulse	HeartPulse	/srv/projects/web/HeartPulse	Web
+arena	Arena	/srv/projects/web/arena.hs-manacost.ru	Web
+battlegrounds	Battlegrounds	/srv/projects/web/bg.hs-manacost.ru	Web
+work	Work portal	/srv/projects/web/work.kolodahearthstone.com	Web
+kolodahearthstone	Koloda Hearthstone	/srv/projects/wordpress/kolodahearthstone.com	WordPress
+wordpress-plugins	Hearthstone plugins	/srv/projects/wordpress/kolodahearthstone-plugins	WordPress
+parsesunix	ParsesUnix	/srv/projects/data/ParsesUnix	Data
+boosty-api	Boosty API	/srv/projects/boosty-api	Services
+license-work	License service	/srv/projects/deckview/license-work	Services
+telegram-auth	Telegram auth	/srv/projects/telegram/kolodaheartstone-auth	Services

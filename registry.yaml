@@ -7,6 +7,13 @@ server_entrypoints:
   - /srv/projects/AGENTS.md
   - /home/debian/server/AGENTS.md
 entrypoint_install_script: scripts/install-server-entrypoints.sh
+global_agent_entrypoints:
+  - /home/debian/.codex/AGENTS.md
+  - /home/debian/.config/opencode/AGENTS.md
+  - /home/debian/.claude/CLAUDE.md
+  - /home/debian/.gemini/GEMINI.md
+global_entrypoint_install_script: scripts/install-global-agent-entrypoints.sh
+entrypoint_check_script: scripts/check-agent-entrypoints.sh
 inventory_file: inventory/skills.tsv
 source_inventory_file: inventory/sources.tsv
 external_inventory_file: inventory/external-skills.tsv

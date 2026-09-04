@@ -18,8 +18,18 @@ fail() {
 [[ -f "$source_inventory" ]] || fail "missing inventory/sources.tsv"
 [[ -f "$external_inventory" ]] || fail "missing inventory/external-skills.tsv"
 
-for required in AGENTS.md README.md docs/migration.md docs/engineering-skills.md profiles/server.yaml profiles/openbot.yaml profiles/hearthpulse.yaml profiles/wordpress.yaml profiles/data.yaml profiles/engineering.yaml third_party/NOTICE.md; do
+for required in AGENTS.md README.md docs/migration.md docs/engineering-skills.md docs/agent-entrypoints.md profiles/server.yaml profiles/openbot.yaml profiles/hearthpulse.yaml profiles/wordpress.yaml profiles/data.yaml profiles/engineering.yaml third_party/NOTICE.md scripts/check-agent-entrypoints.sh scripts/install-global-agent-entrypoints.sh; do
   [[ -f "$repo_root/$required" ]] || fail "missing $required"
+done
+
+for entrypoint in /home/debian/.codex/AGENTS.md /home/debian/.config/opencode/AGENTS.md /home/debian/.claude/CLAUDE.md /home/debian/.gemini/GEMINI.md; do
+  if [[ -L "$entrypoint" ]]; then
+    [[ "$(readlink "$entrypoint")" == "$repo_root/AGENTS.md" ]] || fail "global agent entrypoint points elsewhere: $entrypoint"
+  elif [[ -e "$entrypoint" ]]; then
+    fail "global agent entrypoint is not a symlink: $entrypoint"
+  else
+    printf 'WARNING: global agent entrypoint is not installed: %s\n' "$entrypoint" >&2
+  fi
 done
 
 if [[ -f "$registry" ]]; then

@@ -73,9 +73,20 @@ skills доступными всему серверу, но не заставл�
 ```
 
 Серверные entrypoint-файлы `/home/debian/AGENTS.md`,
-`/srv/projects/AGENTS.md` и `/home/debian/server/AGENTS.md` являются ссылками
-на этот `AGENTS.md`. Повторный запуск `scripts/install-server-entrypoints.sh`
-сохраняет уже корректные ссылки и устанавливает только недостающие.
+`/srv/projects/AGENTS.md` и `/home/debian/server/AGENTS.md`, а также глобальные
+файлы обнаруженных клиентов `/home/debian/.codex/AGENTS.md`,
+`/home/debian/.config/opencode/AGENTS.md`, `/home/debian/.claude/CLAUDE.md` и
+`/home/debian/.gemini/GEMINI.md` должны быть ссылками на этот `AGENTS.md`.
+Серверные ссылки устанавливаются через `scripts/install-server-entrypoints.sh`.
+Глобальные ссылки клиентов устанавливаются через
+`scripts/install-global-agent-entrypoints.sh --adopt-existing`; перед заменой
+обычного файла он сохраняется как обратимый `.legacy-*` backup. Все ссылки
+проверяются командой `scripts/check-agent-entrypoints.sh`.
+
+Это гарантирует единый источник для обнаруженных клиентов и рабочих корней,
+но не может заставить произвольный ИИ-клиент, который игнорирует файловые
+инструкции, прочитать их. Ближайшие project/vendor policy-файлы сохраняются и
+могут дополнять правила для своего проекта.
 
 Проверка не требует установки Node или Bun: она валидирует структуру,
 уникальность ids, обязательные frontmatter-поля и отсутствие очевидных

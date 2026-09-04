@@ -4,9 +4,19 @@ This repository is the canonical source for the skills that are maintained by
 Manacost Labs on the Debian server.
 
 The server entrypoints `/srv/projects/AGENTS.md`, `/home/debian/server/AGENTS.md`,
-and `/home/debian/AGENTS.md` are intended to point to this same file. Keep this
-file in the repository; do not edit an entrypoint as a separate policy copy.
-Install them with `scripts/install-server-entrypoints.sh`.
+and `/home/debian/AGENTS.md` are intended to point to this same file. The
+known client-global entrypoints `/home/debian/.codex/AGENTS.md`,
+`/home/debian/.config/opencode/AGENTS.md`, `/home/debian/.claude/CLAUDE.md`,
+and `/home/debian/.gemini/GEMINI.md` are also intended to point to this file.
+Keep this file in the repository; do not edit an entrypoint as a separate
+policy copy. Install server links with `scripts/install-server-entrypoints.sh`,
+client links with `scripts/install-global-agent-entrypoints.sh`, and verify all
+known links with `scripts/check-agent-entrypoints.sh`.
+
+For supported clients on this host, this file is the single global policy
+source. Project-specific and vendor-specific policy files remain in place and
+may add narrower rules under the precedence defined below; they are not
+silently replaced by the global installation script.
 
 ## Authority and precedence
 

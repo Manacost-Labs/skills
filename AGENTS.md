@@ -3,10 +3,10 @@
 This repository is the canonical source for the skills that are maintained by
 Manacost Labs on the Debian server.
 
-The server entrypoints `/srv/projects/AGENTS.md` and
-`/home/debian/server/AGENTS.md` are intended to point to this same file. Keep
-this file in the repository; do not edit either entrypoint as a separate policy
-copy. Install them with `scripts/install-server-entrypoints.sh`.
+The server entrypoints `/srv/projects/AGENTS.md`, `/home/debian/server/AGENTS.md`,
+and `/home/debian/AGENTS.md` are intended to point to this same file. Keep this
+file in the repository; do not edit an entrypoint as a separate policy copy.
+Install them with `scripts/install-server-entrypoints.sh`.
 
 ## Authority and precedence
 
@@ -122,11 +122,12 @@ CI changes, `ci-cd-and-automation` is mandatory. For code changes,
 `git-workflow-and-versioning` is mandatory. For a large context, long-running
 task, or context handoff, also load the relevant context-engineering skill.
 
-### Mandatory 5.6 Luna sub-agent gates
+### Mandatory Luna sub-agent gates
 
 For every task that can change code, configuration, dependencies,
 infrastructure, tests, documentation, or release state, use two explicit
-sub-agent gates. The required model/alias for both gates is **`5.6 Luna`**.
+sub-agent gates. The required native model ID for both gates is
+**`gpt-5.6-luna`** (human label: **`5.6 Luna`**).
 Use the native sub-agent/thread mechanism exposed by the current client, or
 the configured dev-team mechanism when it supports model selection. These
 gates are part of execution, not optional background advice.
@@ -134,7 +135,7 @@ gates are part of execution, not optional background advice.
 #### Gate A: context before implementation
 
 Before choosing skills, tools, or MCPs, start one read-only Context Scout on
-`5.6 Luna`. It must not edit files, access secrets, commit, push, deploy, or
+`gpt-5.6-luna`. It must not edit files, access secrets, commit, push, deploy, or
 change external state. Ask it to return a compact `CONTEXT BRIEF` containing:
 
 - task goal, scope, non-goals, and acceptance criteria;
@@ -153,7 +154,7 @@ tools.
 #### Gate B: documentation and micro-review after implementation
 
 After implementation and focused tests, but before the final quality gate,
-start a second independent documentation/review sub-agent on `5.6 Luna`.
+start a second independent documentation/review sub-agent on `gpt-5.6-luna`.
 Give it the implementation diff and the Context Brief. Its code review is
 read-only by default; it may write only the explicitly assigned documentation
 described below. It must:
@@ -176,9 +177,11 @@ and resolves them.
 
 #### Model availability and final ownership
 
-Attempt the exact `5.6 Luna` alias and record the result. Never claim that a
-sub-agent ran when the client did not expose or execute it. If the alias is
-unavailable, record `5.6 Luna: unavailable`; for low-risk work use the closest
+Use the native model ID `gpt-5.6-luna`; do not pass the human label `5.6 Luna`
+as a model override unless the current client explicitly advertises that exact
+alias. Never claim that a sub-agent ran when the client did not expose or
+execute it. If `gpt-5.6-luna` is unavailable, record
+`gpt-5.6-luna: unavailable`; for low-risk work use the closest
 available read-only reviewer only when safe, and for high-risk, production,
 authentication, migration, or security-sensitive work stop and request a
 model/coordination decision before editing.
@@ -337,8 +340,8 @@ Every implementation handoff must include:
    checks from the routing matrix;
 6. a final `git status --short` and `git diff --name-only` comparison against
    the baseline;
-7. the `CONTEXT BRIEF` and `REVIEW BRIEF`, including the actual `5.6 Luna`
-   availability/execution status;
+7. the `CONTEXT BRIEF` and `REVIEW BRIEF`, including the actual
+   `gpt-5.6-luna` availability/execution status;
 8. failures, baseline debt, skipped tools with reasons, residual risks, and
    the exact next action.
 

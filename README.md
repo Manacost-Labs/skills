@@ -72,6 +72,11 @@ skills доступными всему серверу, но не заставл�
 ./scripts/skillctl check-response < response.md
 ```
 
+Серверные entrypoint-файлы `/home/debian/AGENTS.md`,
+`/srv/projects/AGENTS.md` и `/home/debian/server/AGENTS.md` являются ссылками
+на этот `AGENTS.md`. Повторный запуск `scripts/install-server-entrypoints.sh`
+сохраняет уже корректные ссылки и устанавливает только недостающие.
+
 Проверка не требует установки Node или Bun: она валидирует структуру,
 уникальность ids, обязательные frontmatter-поля и отсутствие очевидных
 секретов в каноническом каталоге.

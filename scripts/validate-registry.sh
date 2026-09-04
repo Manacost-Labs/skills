@@ -28,7 +28,7 @@ if [[ -f "$registry" ]]; then
   rg -q '^policy_file: AGENTS\.md$' "$registry" || fail "registry policy_file is not AGENTS.md"
 fi
 
-for entrypoint in /srv/projects/AGENTS.md /home/debian/server/AGENTS.md; do
+for entrypoint in /home/debian/AGENTS.md /srv/projects/AGENTS.md /home/debian/server/AGENTS.md; do
   if [[ -L "$entrypoint" ]]; then
     [[ "$(readlink "$entrypoint")" == "$repo_root/AGENTS.md" ]] || fail "server entrypoint points elsewhere: $entrypoint"
   elif [[ -e "$entrypoint" ]]; then

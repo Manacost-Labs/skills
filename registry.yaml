@@ -3,6 +3,7 @@ repository: https://github.com/Manacost-Labs/skills
 canonical_root: skills
 policy_file: AGENTS.md
 server_entrypoints:
+  - /home/debian/AGENTS.md
   - /srv/projects/AGENTS.md
   - /home/debian/server/AGENTS.md
 entrypoint_install_script: scripts/install-server-entrypoints.sh

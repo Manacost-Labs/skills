@@ -13,7 +13,8 @@ Usage: build-graph-portal.sh [--check] [--output PATH] [--manifest PATH]
 
 Builds one code-only Graphify map per reviewed repository and an aggregate
 server map. Source snapshots contain Git-tracked files only; public output
-contains HTML plus the non-sensitive repository manifest.
+contains the native graph UI and allowlisted navigation JSON. Raw AST data
+is retained in a private sibling directory, never inside the public release.
 EOF
 }
 
@@ -66,10 +67,10 @@ while IFS=$'\t' read -r slug label repository group extra; do
 done <"$manifest"
 
 ((repo_count >= 1)) || fail 'manifest has no repositories'
-for command_name in awk git graphify tar realpath install sed; do
+for command_name in awk git graphify tar realpath install python3; do
 	command -v "$command_name" >/dev/null 2>&1 || fail "required command is unavailable: $command_name"
 done
-for asset in index.html app.js styles.css; do
+for asset in index.html app.js styles.css graph-model.mjs layout-worker.js; do
 	[[ -r "$script_dir/$asset" ]] || fail "portal asset is missing: $asset"
 done
 [[ -x "$snapshot_checker" ]] || fail 'snapshot security checker is missing or not executable'
@@ -87,7 +88,9 @@ case "$output" in
 	;;
 esac
 
+[[ ! -e "$output" && ! -e "$output.private" ]] || fail 'use a new release path; existing releases are immutable'
 mkdir -p -- "$output/graphs"
+install -d -m 0700 "$output.private"
 work_dir=$(mktemp -d "${TMPDIR:-/tmp}/graph-portal.XXXXXX")
 cleanup() {
 	rm -rf -- "$work_dir"
@@ -99,9 +102,10 @@ while IFS=$'\t' read -r slug label repository group extra; do
 	[[ -z "$slug" || "$slug" == \#* ]] && continue
 	printf 'Building %s (%s)\n' "$label" "$slug"
 	snapshot="$work_dir/snapshots/$slug"
-	graph_dir="$work_dir/maps/$slug/graphify-out"
+	graph_dir="$output.private/$slug/graphify-out"
 	mkdir -p -- "$snapshot" "$graph_dir"
-	git -C "$repository" archive --format=tar HEAD | tar -xf - -C "$snapshot" \
+	revision=$(git -C "$repository" rev-parse HEAD)
+	git -C "$repository" archive --format=tar "$revision" | tar -xf - -C "$snapshot" \
 		--exclude='.env*' --exclude='*/.env*' --exclude='*.pem' --exclude='*.key' \
 		--exclude='*.p12' --exclude='*.pfx' --exclude='id_rsa*' \
 		--exclude='.npmrc' --exclude='.pypirc' --exclude='credentials.json' \
@@ -111,26 +115,14 @@ while IFS=$'\t' read -r slug label repository group extra; do
 	GRAPHIFY_OUT="$graph_dir" graphify extract "$snapshot" \
 		--code-only --no-cluster --max-workers 1
 	[[ -s "$graph_dir/graph.json" ]] || fail "Graphify produced no graph for $slug"
-	GRAPHIFY_OUT="$graph_dir" graphify cluster-only "$snapshot" --no-label
-	graphify export callflow-html \
-		--graph "$graph_dir/graph.json" \
-		--report "$graph_dir/GRAPH_REPORT.md" \
-		--output "$output/graphs/$slug.html"
-	sed -i 's/mermaid@11\/dist/mermaid@11.17.2\/dist/g' "$output/graphs/$slug.html"
-	[[ -s "$output/graphs/$slug.html" ]] || fail "Graphify produced no HTML for $slug"
-	graphs+=("$graph_dir/graph.json")
+	python3 "$script_dir/export_graph.py" "$output/graphs/$slug.json" "$graph_dir/graph.json" \
+		--repo "$slug" "$label" "$group" "$revision"
+	graphs+=("$output/graphs/$slug.json")
 done <"$manifest"
 
-aggregate_graph="$work_dir/server-global-graph.json"
-graphify merge-graphs "${graphs[@]}" --out "$aggregate_graph"
-graphify export callflow-html \
-	--graph "$aggregate_graph" \
-	--output "$output/graphs/whole-server.html" \
-	--max-sections 24
-sed -i "s/$(basename -- "$work_dir")/Manacost Server/g" "$output/graphs/whole-server.html"
-sed -i 's/mermaid@11\/dist/mermaid@11.17.2\/dist/g' "$output/graphs/whole-server.html"
+python3 "$script_dir/export_graph.py" "$output/graphs/whole-server.json" "${graphs[@]}"
 
-for asset in index.html app.js styles.css; do
+for asset in index.html app.js styles.css graph-model.mjs layout-worker.js; do
 	install -m 0644 "$script_dir/$asset" "$output/$asset"
 done
 awk -F '\t' 'BEGIN { OFS="\t"; print "# slug\tlabel\tgroup" } !/^#/ && NF { print $1, $2, $4 }' \

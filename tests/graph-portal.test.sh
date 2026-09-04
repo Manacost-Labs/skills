@@ -50,22 +50,31 @@ if command -v gitleaks >/dev/null 2>&1; then
 	fi
 fi
 
+python3 -B "$repo_root/tests/test_graph_export.py"
+python3 -B "$repo_root/tests/test_graph_publish.py"
+node --test "$repo_root/tests/graph-model.test.mjs"
+if [[ "${AI_E2E:-0}" == 1 ]]; then
+	python3 -B "$repo_root/tests/graph-browser.py"
+fi
 mkdir -p "$tmp_dir/release/graphs"
-printf '%s\n' '<!doctype html>' >"$tmp_dir/release/index.html"
-printf '%s\n' '/* app */' >"$tmp_dir/release/app.js"
-printf '%s\n' '/* styles */' >"$tmp_dir/release/styles.css"
+for asset in index.html app.js styles.css graph-model.mjs layout-worker.js; do
+	install -m 0644 "$portal_dir/$asset" "$tmp_dir/release/$asset"
+done
 printf '%s\t%s\t%s\n' '# slug' 'label' 'group' 'sample' 'Sample' 'Test' >"$tmp_dir/release/repositories.tsv"
 printf '%s\n' '2026-09-04T00:00:00Z' >"$tmp_dir/release/built-at.txt"
-printf '%s\n' '<!doctype html>' >"$tmp_dir/release/graphs/sample.html"
-printf '%s\n' '<!doctype html>' >"$tmp_dir/release/graphs/whole-server.html"
+printf '%s\n' '{"nodes":[{"id":"a","label":"answer","source_file":"example.py"}],"links":[]}' >"$tmp_dir/raw.json"
+python3 "$portal_dir/export_graph.py" "$tmp_dir/release/graphs/sample.json" "$tmp_dir/raw.json" --repo sample Sample Test abc
+python3 "$portal_dir/export_graph.py" "$tmp_dir/release/graphs/whole-server.json" "$tmp_dir/release/graphs/sample.json"
 "$publisher" --check "$tmp_dir/release"
+printf '%s\n' 'not for publishing' >"$tmp_dir/release/private.txt"
+if "$publisher" --check "$tmp_dir/release" >/dev/null 2>&1; then
+	printf '%s\n' 'expected unexpected release data to be rejected' >&2
+	exit 1
+fi
 
 grep -q 'id="repository-select"' "$portal_dir/index.html"
-grep -q 'id="graph-frame"' "$portal_dir/index.html"
+grep -q 'id="graph-canvas"' "$portal_dir/index.html"
 grep -q 'URLSearchParams' "$portal_dir/app.js"
-grep -q 'textContent = repository.label' "$portal_dir/app.js"
-grep -q 'mermaid@11.17.2' "$builder"
-grep -q 'loading="lazy"' "$portal_dir/index.html"
 grep -q 'X-Frame-Options "SAMEORIGIN"' "$nginx_conf"
 grep -q ':443 ssl' "$nginx_conf"
 grep -q 'return 301 https://graph.kolodahearthstone.com' "$nginx_conf"

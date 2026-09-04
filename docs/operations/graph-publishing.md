@@ -1,43 +1,93 @@
 # Graph publishing
 
-`graph.kolodahearthstone.com` is a static portal for the important server
-repositories listed in `ops/graph-portal/repositories.tsv`. It includes one
-code map per repository and an aggregate “whole server” map.
+`graph.kolodahearthstone.com` is a static, native canvas portal for the 11
+reviewed repositories listed in `ops/graph-portal/repositories.tsv`. It serves
+one file/symbol map per repository and an aggregate `whole-server` file map.
+“Whole server” means this approved source-code manifest; it does not describe
+OS services, hosts, or runtime dependencies.
 
-The builder exports every repository from Git `HEAD` into a temporary snapshot
-before Graphify runs. Untracked files, task worktrees, uploads, caches, and
-common secret/key filenames are therefore not indexed. Only generated HTML and
-the public repository label manifest are deployed; graph JSON and reports stay
-outside the web root. The generated Mermaid runtime is pinned to a reviewed
-exact version during the build.
+## Data boundary
 
-The nginx origin is defined in
-`ops/nginx/graph.kolodahearthstone.com.conf`. It serves the HTML and `/healthz`
-only, denies directory traversal by `try_files`, and sends restrictive browser
-headers. `graph.json`, `GRAPH_REPORT.md`, source files, and map internals are
-not placed in the public web root.
+The builder archives each repository at Git `HEAD` into a temporary snapshot,
+quarantines sensitive filenames and Gitleaks findings, and runs Graphify in
+code-only mode with one worker. Untracked files, task worktrees, uploads,
+caches, source text, extraction context, credentials, and absolute server paths
+are not public inputs. SQL extraction is not part of this release: the host
+does not have the required `tree_sitter_sql` support, so the documented scope is
+source-code maps only.
 
-The DNS zone is hosted by Cloudflare. The A and AAAA records point to the nginx
-origin and are proxied. The origin uses a dedicated Cloudflare Origin CA
-certificate, while browsers receive Cloudflare's publicly trusted edge
-certificate. HTTP redirects to HTTPS.
+`export_graph.py` emits the small public schema: relative file paths, labels,
+line numbers, node kinds, repository IDs, and allowlisted edge relations. The
+raw Graphify `graph.json` files remain in the private sibling directory
+`<release>.private/`, which is mode `0700`; never copy that sibling into the
+web root or publish it as an adjacent asset.
 
-To build a release at low system priority:
+The public release contains exactly these assets:
+
+```text
+index.html
+app.js
+styles.css
+graph-model.mjs
+layout-worker.js
+repositories.tsv
+built-at.txt
+graphs/<11 repository slugs>.json
+graphs/whole-server.json
+```
+
+The validator and publisher reject missing or extra files, duplicate or unsafe
+manifest entries, symlinks, dangling graph edges, and unexpected public node or
+edge fields. Public graph metadata is navigation data, not an authorization
+boundary; review the manifest before adding a repository.
+
+## Build
+
+Build a new immutable release at low system priority:
 
 ```bash
-release=/srv/graphify/maps/releases/$(date -u +%Y%m%dT%H%M%SZ)
+release=/srv/graphify/maps/graph-native-$(date -u +%Y%m%d-%H%M)
 ionice -c3 nice -n 19 ops/graph-portal/build-graph-portal.sh --output "$release"
 ```
 
-Validate and atomically publish it with:
+The build is intentionally serial and should run only when host pressure
+permits. A current rebuild produced 3,144 files, 38,401 symbols, and 77,622
+aggregate symbol relations (`stats.links`) across all 11 repositories; its
+aggregate public file graph contains 5,565 file edges. Validate before any
+privileged operation:
+
+```bash
+ops/graph-portal/publish-graph-portal.sh --check "$release"
+```
+
+## Origin and publication
+
+The nginx origin is defined in
+`ops/nginx/graph.kolodahearthstone.com.conf`. HTTP redirects to HTTPS. The
+origin serves only the static release and `/healthz`, uses `try_files`, and
+sends restrictive headers. The native module has an explicit
+`application/javascript` MIME location. The CSP permits same-origin scripts and
+workers only, disallows child frames, and contains no CDN, `unsafe-eval`, or
+inline script allowance. `style-src 'unsafe-inline'` remains because the UI
+sets a small CSS custom property for cluster colors; this is a residual
+hardening item, not a script execution dependency.
+
+The Gate B review in `docs/operations/graph-ui-review.md` found and then
+verified fixes for the publisher's content-integrity and reload-rollback risks.
+Run the check-only validation before the privileged publication. Once the
+release passes it:
 
 ```bash
 ops/graph-portal/publish-graph-portal.sh "$release"
 ```
 
-The publisher verifies that every manifest entry has a map, synchronizes into
-a versioned release with stale files deleted, validates nginx, and atomically
-switches the `current` symlink. The previous release remains available for
-rollback but is not reachable from the web root. The public map is navigation
-metadata, not an authorization boundary; review the repository manifest before
-adding a project.
+The publisher validates the exact release, copies it into a new versioned
+directory, validates nginx, and switches the `current` symlink. Releases are
+immutable; retain the previous version for rollback. After publication, verify
+the HTTPS endpoint, `/healthz`, the module MIME type, CSP, and the desktop and
+mobile graph flow. Offline browser tests do not verify live nginx response
+headers or production routing.
+
+Cloudflare proxies the DNS A and AAAA records and presents the public edge
+certificate; nginx uses the dedicated Cloudflare Origin CA certificate. DNS,
+authentication, and Cloudflare cache configuration are outside this task.

@@ -18,7 +18,7 @@
     </a>
     <div class="search-wrap">
       <span class="search-icon" aria-hidden="true">⌕</span>
-      <input id="search" type="search" placeholder="Найти файл или символ…" autocomplete="off" aria-label="Поиск по графу" aria-controls="search-results" aria-expanded="false">
+      <input id="search" type="search" placeholder="Что ищем? Проект, задача, файл…" maxlength="500" autocomplete="off" aria-label="Поиск проектов и кода" aria-controls="search-results" aria-expanded="false">
       <kbd>Ctrl K</kbd>
       <div id="search-results" class="search-results" aria-label="Результаты поиска" hidden></div>
     </div>
@@ -35,7 +35,7 @@
     <section class="graph-workspace" aria-labelledby="current-title">
       <header class="graph-header">
         <div class="breadcrumb"><span id="current-group">Обзор</span><span>/</span><h1 id="current-title">Весь сервер</h1></div>
-        <div class="view-switch" aria-label="Уровень детализации"><button id="files-view" aria-pressed="true">Файлы</button><button id="symbols-view" aria-pressed="false">Символы</button></div>
+        <div class="view-switch" aria-label="Уровень детализации"><button id="project-info" aria-label="О проекте">О проекте</button><button id="files-view" aria-pressed="true">Файлы</button><button id="symbols-view" aria-pressed="false">Символы</button></div>
       </header>
       <div class="graph-stage" id="stage">
         <canvas id="graph-canvas" tabindex="0" aria-label="Граф связей. Используйте поиск или список узлов для навигации с клавиатуры. Стрелки перемещают карту, плюс и минус меняют масштаб."></canvas>
@@ -53,7 +53,14 @@
     <aside class="inspector" id="inspector" aria-label="Информация о графе">
       <div id="overview">
         <div class="inspector-heading"><span class="eyebrow">О ГРАФЕ</span><span class="tiny-graph" aria-hidden="true">⌘</span></div>
-        <h2>Код в контексте</h2><p class="intro">От общей картины<br>до одной зависимости.</p>
+        <h2 id="project-title">Код в контексте</h2><p class="intro" id="project-purpose">От общей картины до одной зависимости.</p>
+        <p class="passport-meta" id="project-stack"></p>
+        <p class="passport-meta" id="project-state"></p>
+        <p class="passport-meta" id="snapshot-state" role="status"></p>
+        <p class="passport-meta" id="project-entrypoints"></p>
+        <button id="prepare-context" class="secondary-button" disabled>Подготовить контекст ИИ</button>
+        <label class="passport-meta" for="context-preview">Только структура · до 8 КБ · выделите и скопируйте</label>
+        <textarea id="context-preview" readonly hidden rows="7" aria-label="Контекст ИИ — метаданные графа"></textarea>
         <div class="stats"><div><strong id="stat-files">—</strong><span>файлов</span></div><div><strong id="stat-links">—</strong><span>связей</span></div></div>
         <div class="stat-symbols"><span>Символов в индексе</span><strong id="stat-symbols">—</strong></div>
         <div class="section-label">КАК ЧИТАТЬ КАРТУ</div>

@@ -1,5 +1,44 @@
 # Graph portal rollout
 
+## Extension: navigator first release (2026-09-05)
+
+User approved starting the navigator plan and pushing source. Scope: reviewed
+passports for the existing 11 repositories, local intent routing with reasons
+and ambiguity, browser project cards and snapshot indicators, read-only local
+CLI returning allowlisted graph metadata within a strict UTF-8 byte budget.
+No deployment, raw source publication, external AI, index refresh, new service,
+dependency, automatic hooks or cross-repository edge inference in this release.
+
+Sequence and acceptance:
+1. Tests first: natural-language routing, unknown/ambiguous queries, deterministic
+   ordering, budget boundaries, directed relationships, stale/unknown revisions.
+2. Add reviewed catalog and shared pure search/context functions; keep all 11
+   projects available and route without depending on the drawing cap.
+3. Connect browser search/cards and local CLI, using existing exported graphs.
+   Source roots come only from the fixed manifest; CLI never reads source text.
+4. Update exact publication asset validation and builder contract sequentially;
+   preserve current release compatibility and do not activate any release.
+5. Verify focused Node/Python tests, offline Chromium at desktop/mobile sizes,
+   make check/verify, applicable lint/security; independent Luna micro-review.
+6. Commit and push owned source paths only, preserve concurrent README edits.
+
+Owned files: ops/graph-portal, graph-specific tests, this plan/checklist,
+docs/operations/graph-navigator.md. Profile server. Skills: using-agent-skills,
+planning-and-task-breakdown, context-engineering, graphify-server-map, TDD;
+frontend/browser and Git/CI skills applied in their respective phases. This
+exceeds the usual five-skill budget because explicit user policy requires each
+phase's verification, not because all catalog skills are needed.
+
+No parallel writers: contracts, implementation and integration remain with the
+lead; read-only scout/review are independent. Baseline HEAD 80251bb was clean;
+README.md changed subsequently and is protected. Existing graph commit 60a57c0
+is stale relative to skills HEAD: a navigation hint, not current-code evidence.
+Serena initial instructions timed out; targeted local reads are the fallback.
+Chrome DevTools denied the domain by allowlist; browser checks will use only
+offline project fixtures. GitHub MCP verifies the authorized push. Context7,
+CodeGraph and remote infrastructure MCPs are unnecessary: no new external API,
+no .codegraph index and no deployment.
+
 ## Goal
 
 Publish `graph.kolodahearthstone.com` as a lightweight portal that can switch

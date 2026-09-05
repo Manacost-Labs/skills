@@ -79,6 +79,27 @@ class ExportTests(unittest.TestCase):
         self.assertEqual(result["files"]["edges"], [])
         self.assertEqual(result["stats"]["symbols"], 2)
 
+    def test_catalog_allowlist_and_manifest_identity(self):
+        import json
+
+        catalog = json.loads((MODULE.parent / "projects.json").read_text())
+        slugs = [p["slug"] for p in catalog["projects"]]
+        self.exporter.validate_catalog(catalog, slugs)
+        self.assertEqual(len(slugs), 11)
+        with self.assertRaises(ValueError):
+            self.exporter.validate_catalog(catalog, slugs[:-1])
+        for field, value in (
+            ("source_text", "not public"),
+            ("entryPoints", ["../escape"]),
+            ("entryPoints", [".env"]),
+            ("status", "probably primary"),
+            ("domains", ["https://user:pass@example.com"]),
+        ):
+            bad = json.loads(json.dumps(catalog))
+            bad["projects"][0][field] = value
+            with self.assertRaises(ValueError, msg=field):
+                self.exporter.validate_catalog(bad, slugs)
+
 
 if __name__ == "__main__":
     unittest.main()

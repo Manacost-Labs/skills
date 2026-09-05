@@ -53,6 +53,7 @@ fi
 python3 -B "$repo_root/tests/test_graph_export.py"
 python3 -B "$repo_root/tests/test_graph_publish.py"
 node --test "$repo_root/tests/graph-model.test.mjs"
+node --test "$repo_root/tests/graph-navigator.test.mjs"
 if [[ "${AI_E2E:-0}" == 1 ]]; then
 	python3 -B "$repo_root/tests/graph-browser.py"
 fi

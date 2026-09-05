@@ -1,0 +1,220 @@
+{
+	"schema": 1,
+	"projects": [
+		{
+			"slug": "skills",
+			"label": "Skills · инструменты ИИ",
+			"purpose": "Каталог навыков, правила агентов, проверки качества и карта кода сервера.",
+			"aliases": [
+				"скиллы",
+				"навыки",
+				"graphify",
+				"граф",
+				"codex",
+				"superpowers"
+			],
+			"capabilities": [
+				"инструкции агентов",
+				"карта сервера",
+				"поиск проектов",
+				"проверки качества",
+				"выбор моделей"
+			],
+			"stack": ["Python", "Bash", "JavaScript"],
+			"domains": ["graph.kolodahearthstone.com"],
+			"status": "unverified",
+			"entryPoints": ["scripts/skillctl", "ops/graph-portal/app.js"],
+			"evidence": ["README.md", "ops/graph-portal/repositories.tsv"]
+		},
+		{
+			"slug": "heartpulse",
+			"label": "HeartPulse · Manacost Arena",
+			"purpose": "Платформа Hearthstone: Арена, Поля сражений, библиотека карт и игровые конструкторы. Назначение пересекается с Arena; основной репозиторий требует подтверждения.",
+			"aliases": ["heartpulse", "hearthpulse", "хартпульс", "хартпульс нет"],
+			"capabilities": [
+				"арена",
+				"поля сражений",
+				"тир листы",
+				"винрейты",
+				"библиотека карт",
+				"гайды",
+				"игровые конструкторы"
+			],
+			"stack": ["TypeScript", "React"],
+			"domains": ["hearthpulse.net"],
+			"status": "unverified",
+			"entryPoints": ["src/main.tsx", "server/index.ts"],
+			"evidence": ["README.md", "package.json"]
+		},
+		{
+			"slug": "arena",
+			"label": "Arena · отдельный репозиторий",
+			"purpose": "Платформа Hearthstone для Арены и Полей сражений. Назначение пересекается с HeartPulse; выбор зависит от домена и рабочей копии.",
+			"aliases": ["arena", "арена"],
+			"capabilities": [
+				"арена",
+				"поля сражений",
+				"тир листы",
+				"винрейты",
+				"библиотека карт",
+				"гайды",
+				"игровые конструкторы"
+			],
+			"stack": ["TypeScript", "React"],
+			"domains": ["arena.hs-manacost.ru"],
+			"status": "unverified",
+			"entryPoints": ["src/main.tsx", "server/index.ts"],
+			"evidence": ["README.md", "package.json"]
+		},
+		{
+			"slug": "battlegrounds",
+			"label": "Battlegrounds · Поля сражений",
+			"purpose": "Отдельный BG-раздел: тир-листы героев, существ и конструктор стратегий.",
+			"aliases": ["bg", "бг", "батлграундс", "battlegrounds"],
+			"capabilities": [
+				"поля сражений",
+				"тир лист героев",
+				"конструктор стратегий",
+				"аксессуары",
+				"среднее место",
+				"популярность героев"
+			],
+			"stack": ["React", "TypeScript", "Vite", "Express"],
+			"domains": ["bg.hs-manacost.ru"],
+			"status": "unverified",
+			"entryPoints": ["src", "server", "package.json"],
+			"evidence": ["README.md", "package.json"]
+		},
+		{
+			"slug": "work",
+			"label": "Work · OpenBot",
+			"purpose": "Рабочее пространство AI-сотрудников: задачи, выделенные браузеры и управляемые инструменты.",
+			"aliases": ["openbot", "опенбот", "ворк", "work"],
+			"capabilities": [
+				"ии сотрудники",
+				"ai coworkers",
+				"браузер агента",
+				"рабочее пространство",
+				"задачи агентов"
+			],
+			"stack": ["TypeScript"],
+			"domains": ["work.kolodahearthstone.com"],
+			"status": "unverified",
+			"entryPoints": ["app", "server", "package.json"],
+			"evidence": ["README.md", "package.json"]
+		},
+		{
+			"slug": "kolodahearthstone",
+			"label": "Koloda Hearthstone · WordPress",
+			"purpose": "Исходники сайта WordPress, дочерняя тема Blocksy и конфигурационные контракты.",
+			"aliases": ["основной сайт", "вордпресс сайт", "blocksy", "блокси"],
+			"capabilities": [
+				"дочерняя тема",
+				"оформление сайта",
+				"темы wordpress",
+				"wordpress"
+			],
+			"stack": ["WordPress", "PHP", "JavaScript"],
+			"domains": ["kolodahearthstone.com", "kolodahearthstone.ru"],
+			"status": "unverified",
+			"entryPoints": ["wordpress/themes/blocksy-child", "wordpress/plugins"],
+			"evidence": ["README.md"]
+		},
+		{
+			"slug": "wordpress-plugins",
+			"label": "Hearthstone · WordPress-плагины",
+			"purpose": "Общие плагины сообщества: вход, социальные функции, колоды и оформление контента.",
+			"aliases": ["плагины", "plugins", "шорткоды", "shortcodes"],
+			"capabilities": [
+				"wordpress",
+				"публикация колод",
+				"голосования",
+				"социальные функции",
+				"оформление контента",
+				"вход telegram"
+			],
+			"stack": ["WordPress", "PHP", "JavaScript"],
+			"domains": [],
+			"status": "unverified",
+			"entryPoints": [
+				"wp-kolodahearthstone-decks/kolodahearthstone-decks.php",
+				"wp-kolodahearthstone-shortcodes/modules"
+			],
+			"evidence": ["README.md"]
+		},
+		{
+			"slug": "parsesunix",
+			"label": "ParsesUnix · сбор данных",
+			"purpose": "Веб-парсинг с проверкой полученных данных и выбором экономного способа загрузки.",
+			"aliases": ["парсер", "парсинг", "скрейпинг", "scraping", "parsesunix"],
+			"capabilities": [
+				"сбор данных",
+				"загрузка страниц",
+				"проверка содержимого",
+				"блокировка парсера",
+				"маршруты загрузки"
+			],
+			"stack": ["Python"],
+			"domains": [],
+			"status": "unverified",
+			"entryPoints": ["src/web_scraper"],
+			"evidence": ["README.md"]
+		},
+		{
+			"slug": "boosty-api",
+			"label": "Boosty API · подписки",
+			"purpose": "Проверка платного доступа, синхронизация аудитории, подписки, продажи и события Tribute.",
+			"aliases": ["boosty", "бусти", "tribute", "трибьют"],
+			"capabilities": [
+				"проверка подписки",
+				"платный доступ",
+				"синхронизация аудитории",
+				"продажи",
+				"проверка email"
+			],
+			"stack": ["Python", "FastAPI"],
+			"domains": [],
+			"status": "unverified",
+			"entryPoints": ["app", "openapi/openapi.json"],
+			"evidence": ["README.md", "pyproject.toml"]
+		},
+		{
+			"slug": "license-work",
+			"label": "Deckview · изображения колод",
+			"purpose": "Telegram-бот и HTTP API: распознавание кода колоды Hearthstone и рендер изображения.",
+			"aliases": ["deckview", "деквью", "license work", "manacostcard"],
+			"capabilities": [
+				"изображения колод",
+				"картинка колоды",
+				"рендер колоды",
+				"deckstring",
+				"архетипы",
+				"пергаментный стиль"
+			],
+			"stack": ["Python", "Flask", "Redis"],
+			"domains": [],
+			"status": "unverified",
+			"entryPoints": ["deckview", "image_creator"],
+			"evidence": ["README.md"]
+		},
+		{
+			"slug": "telegram-auth",
+			"label": "Telegram · VIP Locker",
+			"purpose": "WordPress-плагин и Telegram-бот для премиум-контента, одноразовых ссылок и привязки профиля.",
+			"aliases": ["телеграм", "telegram", "vip locker", "вип локер"],
+			"capabilities": [
+				"magic link",
+				"одноразовые ссылки",
+				"премиум статьи",
+				"telegram stars",
+				"привязка telegram",
+				"вход telegram"
+			],
+			"stack": ["Python", "aiogram", "PHP", "WordPress"],
+			"domains": [],
+			"status": "unverified",
+			"entryPoints": ["bot/bot.py", "simple-vip-locker.php"],
+			"evidence": ["README.md"]
+		}
+	]
+}

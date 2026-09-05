@@ -104,6 +104,18 @@ class PublishTests(unittest.TestCase):
         self.assertEqual(os.readlink(self.root / "web/current"), "releases/release")
         self.assertNotEqual(self.publish().returncode, 0)
 
+    def test_catalog_is_allowed_but_private_cli_is_rejected(self):
+        catalog = json.loads((PORTAL / "projects.json").read_text())
+        sample = dict(catalog["projects"][0], slug="demo")
+        (self.release / "projects.json").write_text(
+            json.dumps({"schema": 1, "projects": [sample]})
+        )
+        shutil.copyfile(PORTAL / "navigate.mjs", self.release / "navigate.mjs")
+        self.assertNotEqual(self.publish().returncode, 0)
+        (self.release / "navigate.mjs").unlink()
+        result = self.publish()
+        self.assertEqual(result.returncode, 0, result.stderr)
+
 
 if __name__ == "__main__":
     unittest.main()

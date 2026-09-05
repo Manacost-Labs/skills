@@ -76,6 +76,29 @@ def respond(route):
     if not args.real_data:
         if path == "repositories.tsv":
             return route.fulfill(body="demo\tDemo\tTest\nsecond\tSecond\tTest\n")
+        if path == "projects.json":
+            return route.fulfill(
+                json={
+                    "schema": 1,
+                    "projects": [
+                        {
+                            "slug": slug,
+                            "label": label,
+                            "purpose": "Тестовый проект для проверки навигации",
+                            "aliases": [alias],
+                            "capabilities": [],
+                            "stack": ["Python"],
+                            "domains": [],
+                            "entryPoints": ["src/file0.py"],
+                            "status": "unverified",
+                        }
+                        for slug, label, alias in [
+                            ("demo", "Demo", "образец"),
+                            ("second", "Second", "второй"),
+                        ]
+                    ],
+                }
+            )
         if path.startswith("graphs/"):
             value = {**data, "repo": path.split("/")[-1].replace(".json", "")}
             return route.fulfill(json=value)
@@ -120,6 +143,25 @@ with sync_playwright() as p:
     )
     expect(page.locator("iframe")).to_have_count(0)
     timings["initialReadySeconds"] = round(time.monotonic() - started, 2)
+    if not args.real_data:
+        page.locator("#search").fill("где у нас второй")
+        page.locator('[data-project="second"]').click()
+        expect(page.locator("#current-title")).to_have_text("Second")
+        expect(page.locator("#graph-canvas")).to_have_attribute("data-ready", "true")
+        page.locator("#search").fill("образец")
+        page.locator('[data-project="demo"]').click()
+        expect(page.locator("#current-title")).to_have_text("Demo")
+        expect(page.locator("#graph-canvas")).to_have_attribute("data-ready", "true")
+        expect(page.locator("#snapshot-state")).to_contain_text("HEAD не проверен")
+        page.locator("#prepare-context").click()
+        packed = page.locator("#context-preview").input_value()
+        assert len(packed.encode("utf-8")) <= 8000
+        assert json.loads(packed)["repo"] == "demo"
+        page.locator("#search").fill("космический корабль")
+        expect(page.locator("#search-results")).to_contain_text("Ничего не найдено")
+        page.keyboard.press("Escape")
+        page.goto("https://graph.test/", wait_until="networkidle")
+        expect(page.locator("#graph-canvas")).to_have_attribute("data-ready", "true")
     if args.screenshots:
         args.screenshots.mkdir(parents=True, exist_ok=True)
         page.screenshot(path=args.screenshots / "graph-native-desktop.png")
@@ -190,6 +232,17 @@ with sync_playwright() as p:
     expect(page.locator("#graph-canvas")).to_have_attribute("data-ready", "true")
     if args.screenshots:
         page.screenshot(path=args.screenshots / "graph-native-mobile.png")
+    for viewport in [
+        {"width": 320, "height": 740},
+        {"width": 768, "height": 900},
+        {"width": 1024, "height": 900},
+    ]:
+        page.set_viewport_size(viewport)
+        assert page.evaluate("document.documentElement.scrollWidth <= innerWidth")
+        page.locator("#project-info").click()
+        expect(page.locator("#overview")).to_be_visible()
+        page.keyboard.press("Escape")
+        expect(page.locator("#inspector")).to_be_hidden()
     assert not errors, errors
     print(
         json.dumps(

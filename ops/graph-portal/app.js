@@ -1,4 +1,11 @@
-import { indexGraph, searchNodes, visibleGraph } from "./graph-model.mjs";
+import {
+	buildContext,
+	indexGraph,
+	searchNodes,
+	searchProjects,
+	snapshotStatus,
+	visibleGraph,
+} from "./graph-model.mjs";
 
 const $ = (selector) => document.querySelector(selector);
 const canvas = $("#graph-canvas"),
@@ -39,6 +46,8 @@ let transform = { x: 0, y: 0, k: 1 },
 	generation = 0,
 	frame = 0;
 let initialRequest = true;
+let catalog = [];
+let taskQuery = "";
 let layoutVersion = 0;
 const cache = new Map(),
 	groupColors = new Map();
@@ -128,6 +137,9 @@ async function activate(slug, push = true) {
 	$("#graph-summary").textContent = "Загрузка индекса…";
 	$("#entry-nodes").replaceChildren();
 	$("#legend").replaceChildren();
+	renderPassport();
+	$("#context-preview").hidden = true;
+	$("#prepare-context").disabled = true;
 	$("#stat-files").textContent = "—";
 	$("#stat-links").textContent = "—";
 	$("#stat-symbols").textContent = "—";
@@ -148,6 +160,8 @@ async function activate(slug, push = true) {
 			(await json(`/graphs/${encodeURIComponent(slug)}.json`, abort.signal));
 		if (ticket !== generation) return;
 		dataset = received;
+		renderPassport();
+		$("#prepare-context").disabled = activeRepo.slug === "whole-server";
 		// Bound retained datasets as well as drawing size.
 		if (!cache.has(slug) && cache.size >= 3)
 			cache.delete(cache.keys().next().value);
@@ -523,9 +537,37 @@ function hit(x, y) {
 	return found;
 }
 function showSearch() {
-	if (!index) return;
-	const found = searchNodes(index, $("#search").value);
-	$("#search-results").replaceChildren(
+	const query = $("#search").value;
+	const projects = searchProjects(catalog, query);
+	const found = index ? searchNodes(index, query) : [];
+	$("#search-results").replaceChildren();
+	if (projects.length) {
+		$("#search-results").append(
+			element(
+				"p",
+				projects[0].ambiguous
+					? "Несколько подходящих проектов — уточните выбор"
+					: "Проекты · совпадения по назначению и названиям",
+			),
+		);
+		for (const { project, reasons } of projects) {
+			const button = element("button");
+			button.dataset.project = project.slug;
+			button.append(
+				element("span", project.label),
+				element("small", project.purpose),
+				element("small", `Совпало: ${reasons.join(", ")}`),
+			);
+			button.onclick = () => {
+				taskQuery = query;
+				activate(project.slug);
+			};
+			$("#search-results").append(button);
+		}
+	}
+	if (found.length)
+		$("#search-results").append(element("p", "Файлы и символы · текущий граф"));
+	$("#search-results").append(
 		...found.map((node) => {
 			const button = element("button");
 			button.append(
@@ -536,11 +578,60 @@ function showSearch() {
 			return button;
 		}),
 	);
-	if (!found.length)
-		$("#search-results").append(element("p", "Ничего не найдено"));
+	if (!found.length && !projects.length)
+		$("#search-results").append(
+			element("p", "Ничего не найдено. Уточните домен, функцию или имя файла."),
+		);
 	$("#search-results").hidden = false;
 	$("#search").setAttribute("aria-expanded", "true");
 }
+function renderPassport() {
+	const project = catalog.find((item) => item.slug === activeRepo.slug);
+	$("#project-title").textContent = project?.label || "Код в контексте";
+	$("#project-purpose").textContent =
+		project?.purpose ||
+		"Поиск находит проекты по названиям, функциям и доменам. Затем откройте нужную карту.";
+	$("#project-stack").textContent = project?.stack.join(" · ") || "";
+	$("#project-state").textContent = project
+		? "Роль репозитория: " +
+			({
+				primary: "основной",
+				experimental: "экспериментальный",
+				archive: "архив",
+				fork: "форк",
+			}[project.status] || "требует подтверждения")
+		: "Обзор выбранных репозиториев, не служб ОС";
+	$("#snapshot-state").textContent = dataset?.commit
+		? "Индекс: " +
+			dataset.commit.slice(0, 8) +
+			" · " +
+			snapshotStatus(dataset.commit).label
+		: "Актуальность HEAD проверяется локальным инструментом";
+	$("#project-entrypoints").textContent = project?.entryPoints.length
+		? `Начните с: ${project.entryPoints.join(", ")}`
+		: "";
+}
+
+$("#project-info").onclick = () => {
+	const open =
+		$("#inspector").classList.contains("is-open") && !$("#overview").hidden;
+	closeDetail();
+	$("#inspector").classList.toggle("is-open", !open);
+};
+$("#prepare-context").onclick = () => {
+	const project = catalog.find((item) => item.slug === activeRepo.slug);
+	if (!project || !dataset) return;
+	const preview = $("#context-preview");
+	preview.value = buildContext(
+		dataset,
+		project,
+		$("#search").value || taskQuery,
+		{ maxBytes: 8000 },
+	);
+	preview.hidden = false;
+	preview.focus();
+	preview.select();
+};
 $("#search").addEventListener("input", showSearch);
 $("#search").addEventListener("focus", () => {
 	if ($("#search").value) showSearch();
@@ -739,6 +830,32 @@ async function init() {
 					throw new Error("Invalid manifest");
 				return { slug, label, group, color: palette[i % palette.length] };
 			});
+		// Old immutable releases have no catalog. Their file search stays usable.
+		const passports = await fetch("/projects.json", { cache: "no-cache" });
+		if (passports.ok) {
+			const value = await passports.json();
+			if (value.schema !== 1 || !Array.isArray(value.projects))
+				throw new Error("Invalid catalog");
+			catalog = value.projects.filter((project) =>
+				repositories.some((repo) => repo.slug === project.slug),
+			);
+		} else if (passports.status !== 404)
+			throw new Error("Catalog request failed");
+		if (!catalog.length)
+			catalog = repositories.map((repo) => ({
+				...repo,
+				purpose: "Карточка назначения ещё не подготовлена",
+				stack: [],
+				entryPoints: [],
+				aliases: [],
+				capabilities: [],
+				domains: [],
+			}));
+		for (const repo of repositories) {
+			repo.label =
+				catalog.find((project) => project.slug === repo.slug)?.label ||
+				repo.label;
+		}
 		$("#repo-count").textContent = repositories.length;
 		$("#repository-list").replaceChildren();
 		$("#repository-select").replaceChildren();
@@ -769,7 +886,7 @@ async function init() {
 				const date = new Date(value.trim());
 				if (!Number.isNaN(date.valueOf()))
 					$("#build-date").textContent =
-						`Снимок ${date.toLocaleDateString("ru")}`;
+						`Сборка ${date.toLocaleDateString("ru")}`;
 			})
 			.catch(() => {});
 	} catch {

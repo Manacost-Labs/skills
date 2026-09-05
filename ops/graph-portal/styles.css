@@ -740,6 +740,30 @@ strong {
 	color: var(--muted);
 	padding: 12px;
 }
+.passport-meta {
+	display: block;
+	font-size: 10px;
+	line-height: 1.7;
+	color: var(--muted);
+	overflow-wrap: anywhere;
+	margin: 8px 0;
+}
+#context-preview {
+	width: 100%;
+	resize: vertical;
+	background: var(--bg);
+	color: var(--text);
+	border: 1px solid var(--border);
+	border-radius: 5px;
+	padding: 8px;
+	font:
+		10px / 1.5 ui-monospace,
+		monospace;
+}
+.search-results button[data-project] small {
+	white-space: normal;
+	font-family: inherit;
+}
 @media (min-width: 1700px) {
 	.workspace {
 		grid-template-columns: 250px minmax(0, 1fr) 292px;

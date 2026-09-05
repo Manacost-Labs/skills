@@ -70,10 +70,11 @@ done <"$manifest"
 for command_name in awk git graphify tar realpath install python3; do
 	command -v "$command_name" >/dev/null 2>&1 || fail "required command is unavailable: $command_name"
 done
-for asset in index.html app.js styles.css graph-model.mjs layout-worker.js; do
+for asset in index.html app.js styles.css graph-model.mjs layout-worker.js projects.json; do
 	[[ -r "$script_dir/$asset" ]] || fail "portal asset is missing: $asset"
 done
 [[ -x "$snapshot_checker" ]] || fail 'snapshot security checker is missing or not executable'
+python3 "$script_dir/export_graph.py" "$script_dir/projects.json" --validate-catalog --catalog-manifest "$manifest"
 
 if ((check_only)); then
 	printf 'graph portal manifest valid: %d repositories.\n' "$repo_count"
@@ -128,4 +129,6 @@ done
 awk -F '\t' 'BEGIN { OFS="\t"; print "# slug\tlabel\tgroup" } !/^#/ && NF { print $1, $2, $4 }' \
 	"$manifest" >"$output/repositories.tsv"
 printf '%s\n' "$(date -u +'%Y-%m-%dT%H:%M:%SZ')" >"$output/built-at.txt"
+python3 "$script_dir/export_graph.py" "$output/projects.json" "$script_dir/projects.json" --catalog-manifest "$output/repositories.tsv"
+python3 "$script_dir/export_graph.py" "$output" --validate
 printf 'Graph portal built at %s with %d repository maps.\n' "$output" "$repo_count"

@@ -55,10 +55,10 @@ make entrypoints
 
 ### В отдельной проверочной копии
 
-Текущая версия каталога находится в ветке `feat/central-skills-catalog`:
+Основная версия каталога находится в ветке `main`:
 
 ```bash
-git clone --branch feat/central-skills-catalog \
+git clone --branch main \
   https://github.com/Manacost-Labs/skills.git
 cd skills
 make test-portable

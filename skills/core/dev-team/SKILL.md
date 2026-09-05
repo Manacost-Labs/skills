@@ -5,6 +5,13 @@ description: Coordinate a local team of Codex agents for planning, parallel impl
 
 # Codex Dev Team
 
+Server routing is governed by the canonical AGENTS.md and
+`policies/engineering.json`, not an unconditional team size. Trivial work is
+lead-only; nontrivial work may use one compact scout and useful disjoint
+workers. Resolve model roles with `skillctl models`. Workers are leaf agents
+and must not create their own scouts/review gates. Use risk-based independent
+review and executable scope claims; no blind integration or automatic commits.
+
 Use this skill when the user wants multiple Codex agents to work like a small development team.
 
 ## Operating Model

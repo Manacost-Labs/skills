@@ -2,7 +2,8 @@ profile: data
 version: 1
 description: Парсеры, контроль данных и Python-проекты.
 
-load:
+activation: on-demand
+available:
   - data/audit-parser-system
   - data/karpathy-coder
   - data/python-ci

@@ -2,7 +2,8 @@ profile: server
 version: 1
 description: Общие правила для работы на Debian-сервере.
 
-load:
+activation: on-demand
+available:
   - core/agent-roster
   - core/dev-team
   - core/botforge

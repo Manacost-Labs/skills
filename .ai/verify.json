@@ -1,0 +1,157 @@
+{
+  "version": 1,
+  "checks": [
+    {
+      "id": "policy",
+      "argv": [
+        "python3",
+        "scripts/engineering.py",
+        "validate-policy"
+      ],
+      "min_risk": "LOW",
+      "covers": [
+        "focused"
+      ]
+    },
+    {
+      "id": "whitespace",
+      "argv": [
+        "python3",
+        "scripts/engineering.py",
+        "check-whitespace"
+      ],
+      "min_risk": "LOW",
+      "covers": [
+        "lint"
+      ]
+    },
+    {
+      "id": "catalog-and-existing-contracts",
+      "argv": [
+        "make",
+        "test-portable"
+      ],
+      "min_risk": "MEDIUM",
+      "timeout": 300,
+      "covers": [
+        "unit"
+      ]
+    },
+    {
+      "id": "engineering-regressions",
+      "argv": [
+        "python3",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_engineering.py"
+      ],
+      "min_risk": "MEDIUM",
+      "covers": [
+        "unit"
+      ]
+    },
+    {
+      "id": "scope-git-integration",
+      "argv": [
+        "python3",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_scope_guard.py"
+      ],
+      "min_risk": "MEDIUM",
+      "covers": [
+        "integration"
+      ]
+    },
+    {
+      "id": "secret-scan-regressions",
+      "argv": [
+        "python3",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_changed_secrets.py"
+      ],
+      "min_risk": "MEDIUM",
+      "covers": [
+        "unit",
+        "security"
+      ]
+    },
+    {
+      "id": "python-lint",
+      "argv": [
+        "ruff",
+        "check",
+        "--isolated",
+        "--select",
+        "E4,E7,E9,F,I",
+        "scripts/engineering.py",
+        "scripts/check_changed_secrets.py",
+        "scripts/scope_guard.py",
+        "tests/test_engineering.py",
+        "tests/test_changed_secrets.py",
+        "tests/test_scope_guard.py"
+      ],
+      "min_risk": "MEDIUM",
+      "covers": [
+        "lint"
+      ]
+    },
+    {
+      "id": "shell",
+      "argv": [
+        "shellcheck",
+        "scripts/skillctl",
+        "scripts/validate-registry.sh",
+        "scripts/check-agent-entrypoints.sh",
+        "scripts/install-server-entrypoints.sh",
+        "scripts/install-global-agent-entrypoints.sh"
+      ],
+      "min_risk": "MEDIUM",
+      "covers": [
+        "lint"
+      ]
+    },
+    {
+      "id": "workflow",
+      "argv": [
+        "actionlint",
+        ".github/workflows/verify.yml"
+      ],
+      "min_risk": "HIGH",
+      "covers": [
+        "lint"
+      ]
+    },
+    {
+      "id": "changed-secrets",
+      "argv": [
+        "python3",
+        "scripts/check_changed_secrets.py"
+      ],
+      "min_risk": "LOW",
+      "covers": [
+        "security"
+      ]
+    }
+  ],
+  "not_applicable": {
+    "types": "Standard-library Python and Bash catalog tooling; no typed application or configured type checker.",
+    "rollback": "This gate validates source only; irreversible operations are not executed. A production project must configure recovery verification."
+  }
+}

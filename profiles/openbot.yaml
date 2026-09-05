@@ -2,7 +2,8 @@ profile: openbot
 version: 1
 description: OpenBot и производительный интерфейс чата.
 
-load:
+activation: on-demand
+available:
   - core/botforge
   - openbot/openbot-data-access
   - openbot/openbot-screen-layout

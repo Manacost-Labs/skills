@@ -2,6 +2,9 @@ version: 1
 repository: https://github.com/Manacost-Labs/skills
 canonical_root: skills
 policy_file: AGENTS.md
+engineering_policy: policies/engineering.json
+verification_config: .ai/verify.json
+verification_entrypoint: make verify
 server_entrypoints:
   - /home/debian/AGENTS.md
   - /srv/projects/AGENTS.md

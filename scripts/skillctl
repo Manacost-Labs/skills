@@ -7,13 +7,23 @@ inventory="$repo_root/inventory/skills.tsv"
 usage() {
   cat <<'EOF'
 Usage:
-  skillctl list <profile>       List skills enabled by a profile
+  skillctl list <profile>       List available skills (does not activate them)
   skillctl resolve <skill-id>   Print the canonical SKILL.md path
   skillctl show <skill-id>      Print metadata and the canonical SKILL.md
   skillctl plan <project-root>  Show a read-only migration plan
   skillctl audit <project-root> Compare local skills with the catalog
   skillctl check-response       Validate a concise agent handoff
   skillctl check                Validate the catalog
+  skillctl route <root> --task TEXT [--complexity trivial|normal|complex]
+  skillctl risk <root> [--risk LOW|MEDIUM|HIGH|CRITICAL]
+  skillctl models               Resolve model roles (does not probe availability)
+  skillctl verify <root> [--dry-run] [--base REVISION]
+  skillctl validate-policy      Validate executable engineering policy
+  skillctl validate-brief FILE  Validate compact Context Brief JSON
+  skillctl scope-init FILE --project ROOT --owner ID --allow GLOB
+  skillctl guard-diff FILE [--pre-edit]  Validate scope and checkpoint drift
+  skillctl scope-checkpoint FILE
+  skillctl scope-close FILE
 EOF
 }
 
@@ -44,7 +54,7 @@ print_profile_skills() {
   while IFS= read -r skill_id; do
     [[ -z "$skill_id" ]] && continue
     printf '  %s\t%s\n' "$skill_id" "$(inventory_path "$skill_id")"
-  done < <(awk '/^load:/{active=1; next} /^[^[:space:]]/{active=0} active && /^  - [^\/]+\/[^[:space:]]+$/{print $2}' "$file")
+  done < <(awk '/^available:/{active=1; next} /^[^[:space:]]/{active=0} active && /^  - [^\/]+\/[^[:space:]]+$/{print $2}' "$file")
 }
 
 list_profile() {
@@ -156,6 +166,12 @@ audit_project() {
 
 command_name=${1:-}
 case "$command_name" in
+  route|risk|models|verify|validate-policy|validate-brief)
+    exec python3 "$repo_root/scripts/engineering.py" "$@"
+    ;;
+  scope-init|guard-diff|scope-checkpoint|scope-close)
+    exec python3 "$repo_root/scripts/scope_guard.py" "$@"
+    ;;
   list)
     [[ $# -eq 2 ]] || { usage >&2; exit 2; }
     list_profile "$2"

@@ -22,41 +22,14 @@ for required in AGENTS.md README.md docs/migration.md docs/engineering-skills.md
   [[ -f "$repo_root/$required" ]] || fail "missing $required"
 done
 
-for entrypoint in /home/debian/.codex/AGENTS.md /home/debian/.config/opencode/AGENTS.md /home/debian/.claude/CLAUDE.md /home/debian/.gemini/GEMINI.md /home/debian/.dsh/AGENTS.md /home/debian/.hermes/AGENTS.md /home/debian/.cursor/rules/AGENTS.md; do
-  if [[ -L "$entrypoint" ]]; then
-    [[ "$(readlink "$entrypoint")" == "$repo_root/AGENTS.md" ]] || fail "global agent entrypoint points elsewhere: $entrypoint"
-  elif [[ -e "$entrypoint" ]]; then
-    fail "global agent entrypoint is not a symlink: $entrypoint"
-  else
-    printf 'WARNING: global agent entrypoint is not installed: %s\n' "$entrypoint" >&2
-  fi
-done
-
-cursor_adapter=/home/debian/.cursor/rules/manacost-global.mdc
-cursor_adapter_target="$repo_root/integrations/cursor/manacost-global.mdc"
-if [[ -L "$cursor_adapter" ]]; then
-  [[ "$(readlink "$cursor_adapter")" == "$cursor_adapter_target" ]] || fail "Cursor global adapter points elsewhere: $cursor_adapter"
-elif [[ -e "$cursor_adapter" ]]; then
-  fail "Cursor global adapter is not a symlink: $cursor_adapter"
-else
-  printf 'WARNING: Cursor global adapter is not installed: %s\n' "$cursor_adapter" >&2
-fi
+# Host installation is separate from portable repository validation.
+# Use make entrypoints explicitly on the managed server.
 
 if [[ -f "$registry" ]]; then
   rg -q '^version: [0-9]+$' "$registry" || fail "registry has no version"
   rg -q '^canonical_root: skills$' "$registry" || fail "registry canonical_root is not skills"
   rg -q '^policy_file: AGENTS\.md$' "$registry" || fail "registry policy_file is not AGENTS.md"
 fi
-
-for entrypoint in /home/debian/AGENTS.md /srv/projects/AGENTS.md /home/debian/server/AGENTS.md; do
-  if [[ -L "$entrypoint" ]]; then
-    [[ "$(readlink "$entrypoint")" == "$repo_root/AGENTS.md" ]] || fail "server entrypoint points elsewhere: $entrypoint"
-  elif [[ -e "$entrypoint" ]]; then
-    fail "server entrypoint is not a symlink: $entrypoint"
-  else
-    printf 'WARNING: server entrypoint is not installed: %s\n' "$entrypoint" >&2
-  fi
-done
 
 skill_files=$(rg --files "$repo_root/skills" -g 'SKILL.md' 2>/dev/null || true)
 if [[ -z "$skill_files" ]]; then
@@ -132,7 +105,7 @@ for profile in "$repo_root"/profiles/*.yaml; do
     if ! awk -F '\t' -v id="$skill_id" 'NR > 1 && $1 == id {found=1} END {exit !found}' "$inventory"; then
       fail "profile $(basename -- "$profile") references missing canonical skill: $skill_id"
     fi
-  done < <(awk '/^load:/{active=1; next} /^[^[:space:]]/{active=0} active && /^  - [^\/]+\/[^[:space:]]+$/{print $2}' "$profile")
+  done < <(awk '/^available:/{active=1; next} /^[^[:space:]]/{active=0} active && /^  - [^\/]+\/[^[:space:]]+$/{print $2}' "$profile")
   while IFS= read -r included_profile; do
     [[ -z "$included_profile" ]] && continue
     [[ -f "$repo_root/profiles/$included_profile.yaml" ]] || fail "profile $(basename -- "$profile") includes missing profile: $included_profile"

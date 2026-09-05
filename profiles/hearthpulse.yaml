@@ -2,7 +2,8 @@ profile: hearthpulse
 version: 1
 description: HearthPulse frontend, backend и release workflow.
 
-load:
+activation: on-demand
+available:
   - hearthpulse/api-contract-change
   - hearthpulse/arch-boundaries
   - hearthpulse/checkpoint-commit

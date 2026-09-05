@@ -2,7 +2,8 @@ profile: wordpress
 version: 1
 description: WordPress-сайты, редактор, плагины и эксплуатация.
 
-load:
+activation: on-demand
+available:
   - wordpress/hs-manacost-project
   - wordpress/hs-manacost/wordpress-accessibility
   - wordpress/hs-manacost/wordpress-clean-code

@@ -28,6 +28,9 @@
 # another's simply lists one model per role; a provider with more rungs
 # expresses the extras as ordered fallbacks. When a vendor merges two
 # rungs, the list shrinks — no schema change.
+# Server role selectors in policies/engineering.json are exact selections.
+# Tier fallback lists do not authorize substituting a mandatory reviewer or
+# promoting a bounded worker to lead. Reordering requires checking the roles.
 #
 # Product catalogs (e.g. Ragbot's engines.yaml) use the SAME tier
 # vocabulary in a per-model `tier:` field. A catalog may carry more
@@ -42,7 +45,7 @@
 # "unknown", never a guess.
 
 version: 2
-updated: "2026-07-14"
+updated: "2026-09-04"
 
 providers:
   anthropic:
@@ -51,9 +54,9 @@ providers:
     routine: [claude-sonnet-5]
     bulk: [claude-haiku-4-5-20251001]             # alias claude-haiku-4-5
   openai:
-    verified: "2026-07-14"           # https://developers.openai.com/api/docs/models
-    judgment: [gpt-5.6-sol]
-    routine: [gpt-5.6-terra]
+    verified: "2026-09-04"           # https://developers.openai.com/api/docs/models
+    judgment: [gpt-6-astra, gpt-5.6-sol]
+    routine: [gpt-5.6-sol, gpt-5.6-terra]
     bulk: [gpt-5.6-luna]
   google:
     verified: "2026-04-24"           # carried from the April engines.yaml snapshot; refresh before relying on it

@@ -1,10 +1,15 @@
-.PHONY: check security refresh-inventory test entrypoints
+.PHONY: verify check security refresh-inventory test test-portable entrypoints
+
+verify:
+	PYTHONDONTWRITEBYTECODE=1 ./scripts/skillctl verify .
 
 check:
 	./scripts/validate-registry.sh
 
-test: check
+test-portable: check
 	./tests/skillctl.test.sh
+
+test: test-portable
 	./tests/graphify-server-map.test.sh
 	./tests/graph-portal.test.sh
 

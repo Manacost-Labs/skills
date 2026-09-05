@@ -1,13 +1,17 @@
 ---
 name: graphify-server-map
-description: Use when explicitly asked to build, refresh, query, or visualize a safe Graphify map of server source repositories; do not activate for ordinary codebase questions without an existing map.
+description: Query an existing Graphify map first for nontrivial cross-file navigation, or safely build and incrementally refresh an explicitly scoped server source map. Do not automatically index projects without a map.
 ---
 
 # Safe Graphify server map
 
 Graphify is the visual, cross-file knowledge map. Use the narrower `codegraph`
 index for symbol-level questions inside one already-indexed project. This skill
-keeps the expensive and privacy-sensitive operation explicit.
+keeps expensive, privacy-sensitive extraction explicit. For an ordinary or
+large task with an existing map, the Context Scout queries it before broad
+source reads, then uses CodeGraph/Serena for exact symbols and targeted files.
+Send the lead a compact result, never the full graph.json. Check map revision
+against HEAD; stale maps are navigation hints, not implementation evidence.
 
 ## Scope
 

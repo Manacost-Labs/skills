@@ -1,0 +1,56 @@
+{
+  "version": 1,
+  "authority": ["system / platform", "developer / security", "explicit user instructions", "project-specific AGENTS.md", "server/global AGENTS.md", "selected profile", "applicable SKILL.md"],
+  "model_table": "skills/engineering/synthesis/synthesis-model-tiers/tiers.yaml",
+  "architecture_review": {
+    "role": "architect",
+    "paths": ["^AGENTS\\.md$", "^policies/", "^skills/engineering/(addy/using-agent-skills|synthesis/synthesis-model-tiers)/", "^skills/core/dev-team/"],
+    "task_match": "global (policy|rules)|skills architecture|глобальн.{0,20}(правил|политик)|архитектур.{0,20}(скилл|skills)"
+  },
+  "roles": {
+    "lead": {"tier": "routine", "index": 0},
+    "scout": {"tier": "bulk", "index": 0},
+    "worker": {"tier": "routine", "index": 1},
+    "architect": {"tier": "judgment", "index": 0},
+    "medium_reviewer": {"tier": "bulk", "index": 0},
+    "high_reviewer": {"tier": "routine", "index": 0},
+    "critical_reviewer": {"tier": "judgment", "index": 0}
+  },
+  "complexity": {
+    "trivial": {"skill_limit": 1, "scout": false, "workers": 0},
+    "normal": {"skill_limit": 3, "scout": true, "workers": 0},
+    "complex": {"skill_limit": 5, "scout": true, "workers": 2}
+  },
+  "risk": {
+    "LOW": {"reviewer": null, "review_required": false, "full_gate": false, "checks": ["focused"]},
+    "MEDIUM": {"reviewer": "medium_reviewer", "review_required": false, "full_gate": false, "checks": ["focused", "lint", "types", "unit"]},
+    "HIGH": {"reviewer": "high_reviewer", "review_required": true, "full_gate": true, "checks": ["focused", "lint", "types", "unit", "integration", "security"]},
+    "CRITICAL": {"reviewer": "critical_reviewer", "review_required": true, "full_gate": true, "checks": ["focused", "lint", "types", "unit", "integration", "security", "rollback"]}
+  },
+  "risk_patterns": {
+    "HIGH": ["(^|/)(AGENTS\\.md|CLAUDE\\.md|GEMINI\\.md)$", "(^|/)(auth[^/]*|security|payments?|migrations?|infra[^/]*|terraform|public-api|concurrency)(/|\\.)", "^(policies|profiles|integrations|scripts)/", "^\\.github/", "(^|/)Makefile$"],
+    "CRITICAL": ["(^|/)(production|secrets|credentials)(/|\\.)", "(^|/)\\.env", "\\.(pem|key|p12|pfx)$"]
+  },
+  "risk_keywords": {
+    "HIGH": "authentication|authorization|public API|concurrency|security|авторизац|аутентификац|миграци|платеж|платёж|инфраструктур",
+    "CRITICAL": "irreversible|destructive migration|production|financial flow|необратим|продакш|боевой сервер"
+  },
+  "protected_paths": [".env*", "**/.env*", "*.pem", "**/*.pem", "*.key", "**/*.key", "**/credentials*", "**/*.db", "**/*.dump"],
+  "brief": {
+    "max_words": 600,
+    "max_items": 12,
+    "list_fields": ["scope", "relevant_files", "symbols", "dependencies", "tests", "constraints", "protected_paths", "risks", "recommended_skills", "unknowns"]
+  },
+  "agents": {"leaf_may_spawn": false, "retry_limit": 1, "statuses": ["requested", "dispatched", "running", "completed", "timed_out", "unavailable", "failed"]},
+  "routes": [
+    {"match": "bug|fix|regression|ошиб|баг|исправ", "skill": "engineering/diagnosing-bugs"},
+    {"match": "test|тест", "skill": "data/test-driven-development"},
+    {"match": "architecture|архитектур", "skill": "engineering/addy/planning-and-task-breakdown"},
+    {"match": "\\b(API|interface|contract)\\b|контракт", "skill": "engineering/addy/api-and-interface-design"},
+    {"match": "\\b(CI|pipeline|release)\\b|релиз", "skill": "engineering/addy/ci-cd-and-automation"},
+    {"match": "graph|граф", "skill": "engineering/graph/graphify-server-map"},
+    {"match": "parallel|subagent|параллель|субагент", "skill": "core/dev-team"},
+    {"match": "security|безопас", "skill": "engineering/qa/lambdatest/api-skill/api-security-patterns"},
+    {"match": "context|handoff|контекст", "skill": "engineering/addy/context-engineering"}
+  ]
+}

@@ -99,9 +99,12 @@ Commit SHA, путь внутри источника и локальный canon
 ## Правила применения
 
 Эти материалы — on-demand guidance, а не безусловная замена проектным
-`AGENTS.md`. При конфликте действует более специфичное правило проекта;
-системные и security-инструкции всегда выше. Не загружай весь engineering
-профиль в каждый prompt: выбирай только нужные skills.
+`AGENTS.md`. Приоритет: system/platform → developer/security → явный запрос
+пользователя → project AGENTS.md → server AGENTS.md → профиль → skill.
+Профили содержат `available:`, а не автоматически загружаемый `load:`.
+Используй `skillctl route` для ограниченного набора, а `list` — только для
+просмотра каталога. Исполняемые проверки и переход со старого формата описаны
+в [engineering-system.md](engineering-system.md).
 
 ## Security baseline
 

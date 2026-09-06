@@ -17,6 +17,8 @@ Usage:
   skillctl route <root> --task TEXT [--complexity trivial|normal|complex]
   skillctl risk <root> [--risk LOW|MEDIUM|HIGH|CRITICAL]
   skillctl models               Resolve model roles (does not probe availability)
+  skillctl dispatch <root> --task TEXT [--capabilities FILE]  Print model stages
+  skillctl validate-routing-policy  Validate bounded runtime model policy
   skillctl verify <root> [--dry-run] [--base REVISION]
   skillctl validate-policy      Validate executable engineering policy
   skillctl validate-brief FILE  Validate compact Context Brief JSON
@@ -166,6 +168,14 @@ audit_project() {
 
 command_name=${1:-}
 case "$command_name" in
+  dispatch)
+    shift
+    exec python3 "$repo_root/scripts/model_routing.py" "$@"
+    ;;
+  validate-routing-policy)
+    shift
+    exec python3 "$repo_root/scripts/model_routing.py" --validate-policy "$@"
+    ;;
   route|risk|models|verify|validate-policy|validate-brief)
     exec python3 "$repo_root/scripts/engineering.py" "$@"
     ;;

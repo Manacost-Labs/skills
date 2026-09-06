@@ -53,6 +53,23 @@ make entrypoints
 модели и не переключает текущую сессию. `route` возвращает пути к навыкам;
 агент должен прочитать выбранные файлы и применить их.
 
+### Экономный runtime dispatch (opt-in)
+
+```bash
+./scripts/skillctl dispatch . --task 'Проверить изменение' --risk HIGH
+./scripts/manacost-dispatch . --task-file /private/task.txt --risk HIGH
+```
+
+Это только JSON-план и точный argv, без запуска. LOW/MEDIUM идут к роли worker
+с Medium reasoning; HIGH — scout → lead → независимый high_reviewer,
+CRITICAL — с critical_reviewer. Architect используется отдельным этапом,
+а не постоянным исполнителем. `max`/`ultra` автоматически запрещены.
+Без подтверждения доступных моделей/effort план не исполним. Фактический запуск
+требует `--execute`, выбранный этап и приватный журнал попыток; повторные попытки
+и fallback обязательного reviewer запрещены. Глобальный `config.toml` и модель
+текущей сессии не меняются. Старый `route` полностью сохранён.
+Подробности, лимиты и честные ограничения — [model routing](docs/model-routing.md).
+
 ### В отдельной проверочной копии
 
 Основная версия каталога находится в ветке `main`:

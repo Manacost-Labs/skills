@@ -1,0 +1,153 @@
+{
+  "version": 1,
+  "reasoning_levels": [
+    "low",
+    "medium",
+    "high",
+    "xhigh"
+  ],
+  "forbidden_automatic_reasoning": [
+    "max",
+    "ultra"
+  ],
+  "limits": {
+    "scout": 1,
+    "implementation_attempts": 1,
+    "review_rounds": 1,
+    "architecture_stages": 1,
+    "model_launches": 4,
+    "brief_bytes": 16384,
+    "timeout_seconds": 900
+  },
+  "stages": {
+    "scout": {
+      "role": "scout",
+      "reasoning_effort": "low",
+      "kind": "context",
+      "required": true,
+      "max_attempts": 1
+    },
+    "worker": {
+      "role": "worker",
+      "reasoning_effort": "medium",
+      "kind": "implementation",
+      "required": true,
+      "max_attempts": 1
+    },
+    "lead": {
+      "role": "lead",
+      "reasoning_effort": "high",
+      "kind": "implementation",
+      "required": true,
+      "max_attempts": 1
+    },
+    "high_reviewer": {
+      "role": "high_reviewer",
+      "reasoning_effort": "high",
+      "kind": "review",
+      "required": true,
+      "max_attempts": 1
+    },
+    "critical_reviewer": {
+      "role": "critical_reviewer",
+      "reasoning_effort": "xhigh",
+      "kind": "review",
+      "required": true,
+      "max_attempts": 1
+    },
+    "architect": {
+      "role": "architect",
+      "reasoning_effort": "xhigh",
+      "kind": "planning",
+      "required": true,
+      "max_attempts": 1
+    }
+  },
+  "routes": {
+    "LOW": {
+      "trivial": [
+        "worker"
+      ],
+      "normal": [
+        "worker"
+      ],
+      "complex": [
+        "worker"
+      ]
+    },
+    "MEDIUM": {
+      "trivial": [
+        "worker"
+      ],
+      "normal": [
+        "worker"
+      ],
+      "complex": [
+        "scout",
+        "worker"
+      ]
+    },
+    "HIGH": {
+      "trivial": [
+        "scout",
+        "lead",
+        "high_reviewer"
+      ],
+      "normal": [
+        "scout",
+        "lead",
+        "high_reviewer"
+      ],
+      "complex": [
+        "scout",
+        "lead",
+        "high_reviewer"
+      ]
+    },
+    "CRITICAL": {
+      "trivial": [
+        "scout",
+        "lead",
+        "critical_reviewer"
+      ],
+      "normal": [
+        "scout",
+        "lead",
+        "critical_reviewer"
+      ],
+      "complex": [
+        "scout",
+        "lead",
+        "critical_reviewer"
+      ]
+    }
+  },
+  "unknown_context": {
+    "risk_floor": "MEDIUM",
+    "prepend": "scout"
+  },
+  "escalation": {
+    "automatic": false,
+    "conditions": [
+      "high_risk",
+      "critical_risk",
+      "public_contract",
+      "auth",
+      "concurrency",
+      "migration",
+      "unclear_root_cause",
+      "architecture_review"
+    ],
+    "requires_evidence": true,
+    "unclear_root_cause_after_attempts": 1,
+    "on_ci_failure_alone": "no_model_upgrade",
+    "on_exhaustion": "blocked_manual_rescope"
+  },
+  "handoff": {
+    "format": "engineering-brief",
+    "whole_repository": false,
+    "parallel": "independent_tasks_only",
+    "review_fresh_context": true
+  },
+  "unavailable_required_stage": "blocked_no_fallback"
+}

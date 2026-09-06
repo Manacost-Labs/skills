@@ -12,6 +12,15 @@ risk floors, required verification categories and protected-path guidance.
 The existing `tiers.yaml` is the only runtime provider-ID table. `skillctl models`
 resolves roles; it does not call an API or change the current conversation's model.
 
+An opt-in [bounded runtime dispatch layer](model-routing.md) adds
+`policies/model-routing.json`, `skillctl dispatch`, and `manacost-dispatch`.
+It reuses these role selectors and risk floors, without changing the legacy
+`route` contract or the default behavior of clients which do not opt in.
+Clear LOW/MEDIUM implementation uses worker/Medium; HIGH/CRITICAL preserve
+mandatory independent reviews. CLI model/effort overrides are per invocation,
+never global configuration changes. No real model execution or independent
+Sol/Astra validation was performed during this layer's no-execution implementation.
+
 | Role | Responsibility |
 | --- | --- |
 | Sol | Everyday lead, contracts, implementation and final integration |
